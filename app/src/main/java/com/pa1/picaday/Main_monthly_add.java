@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 public class Main_monthly_add extends AppCompatActivity {
@@ -36,5 +37,32 @@ public class Main_monthly_add extends AppCompatActivity {
                 finish();
             }
         });
+
+        /* 시간, 하루종일, 데드라인 형태 변환 체크 */
+        final CheckBox chk_time = (CheckBox) findViewById(R.id.chk_time);
+        final CheckBox chk_day = (CheckBox) findViewById(R.id.chk_day);
+        final CheckBox chk_deadline = (CheckBox) findViewById(R.id.chk_deadline);
+        chk_time.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chk_day.setChecked(false);
+                chk_deadline.setChecked(false);
+            }
+        });
+        chk_day.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chk_time.setChecked(false);
+                chk_deadline.setChecked(false);
+            }
+        });
+        chk_deadline.setOnClickListener(new CheckBox.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chk_day.setChecked(false);
+                chk_time.setChecked(false);
+            }
+        });
+
     }
 }

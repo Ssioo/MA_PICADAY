@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class Main_monthly extends AppCompatActivity {
 
@@ -21,6 +22,31 @@ public class Main_monthly extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Main_monthly_add.class);
 
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        /* Next page 버튼 눌렀을 때 */
+        TextView btn_next = (TextView) findViewById(R.id.btn_next_month);
+        btn_next.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Main_weekly.class);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        /* Prev page 버튼 눌렀을 때 */
+        TextView btn_prev = (TextView) findViewById(R.id.btn_prev_month);
+        btn_prev.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Main_daily.class);
+
+                startActivity(intent);
+                finish();
             }
         });
     }
