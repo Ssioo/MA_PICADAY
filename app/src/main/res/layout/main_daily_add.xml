@@ -28,4 +28,14 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_cancel_day"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/check" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteY="164dp" />
 </android.support.constraint.ConstraintLayout>
