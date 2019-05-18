@@ -5,4 +5,8 @@
     <string name="setting">SETTING</string>
     <string name="cancel">CANCELING</string>
     <string name="check">CHECK</string>
+    <string name="today">TODAY</string>
+    <string name="thisweek">THIS WEEK</string>
+    <string name="thismonth">THIS MONTH</string>
+    <string name="icanuse">I CAN USE</string>
 </resources>
