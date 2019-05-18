@@ -45,6 +45,7 @@ public class Main_monthly_add extends AppCompatActivity {
         chk_time.setOnClickListener(new CheckBox.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chk_time.setChecked(true);
                 chk_day.setChecked(false);
                 chk_deadline.setChecked(false);
             }
@@ -53,6 +54,7 @@ public class Main_monthly_add extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 chk_time.setChecked(false);
+                chk_day.setChecked(true);
                 chk_deadline.setChecked(false);
             }
         });
@@ -61,6 +63,7 @@ public class Main_monthly_add extends AppCompatActivity {
             public void onClick(View v) {
                 chk_day.setChecked(false);
                 chk_time.setChecked(false);
+                chk_deadline.setChecked(true);
             }
         });
 

@@ -22,6 +22,7 @@ public class Main_weekly extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Main_weekly_add.class);
 
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
             }
         });
@@ -34,6 +35,7 @@ public class Main_weekly extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Main_daily.class);
 
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
             }
         });
@@ -46,6 +48,7 @@ public class Main_weekly extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Main_monthly.class);
 
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 finish();
             }
         });
