@@ -22,8 +22,6 @@ public class Main_monthly extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Main_monthly_add.class);
 
                 startActivity(intent);
-
-                finish();
             }
         });
 

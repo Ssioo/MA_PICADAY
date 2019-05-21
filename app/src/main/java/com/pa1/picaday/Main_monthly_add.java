@@ -21,7 +21,7 @@ public class Main_monthly_add extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
 
-                startActivity(new Intent(getApplicationContext(), Main_monthly.class));
+                //startActivity(new Intent(getApplicationContext(), Main_monthly.class));
                 finish();
             }
         });
@@ -31,9 +31,7 @@ public class Main_monthly_add extends AppCompatActivity {
         btn_cancel.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
 
-                startActivity(new Intent(getApplicationContext(), Main_monthly.class));
                 finish();
             }
         });

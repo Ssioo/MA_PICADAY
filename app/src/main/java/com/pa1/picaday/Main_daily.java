@@ -22,7 +22,6 @@ public class Main_daily extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Main_daily_add.class);
 
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -60,7 +59,6 @@ public class Main_daily extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Mypage.class);
 
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -72,7 +70,6 @@ public class Main_daily extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Settingpage.class);
 
                 startActivity(intent);
-                finish();
             }
         });
     }

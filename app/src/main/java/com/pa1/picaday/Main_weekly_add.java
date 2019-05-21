@@ -20,7 +20,7 @@ public class Main_weekly_add extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
 
-                startActivity(new Intent(getApplicationContext(), Main_weekly.class));
+                //startActivity(new Intent(getApplicationContext(), Main_weekly.class));
                 finish();
             }
         });
@@ -30,9 +30,7 @@ public class Main_weekly_add extends AppCompatActivity {
         btn_cancel.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
 
-                startActivity(new Intent(getApplicationContext(), Main_weekly.class));
                 finish();
             }
         });
