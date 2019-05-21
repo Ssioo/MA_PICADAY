@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class Main_daily extends AppCompatActivity {
 
     @Override
@@ -50,6 +48,30 @@ public class Main_daily extends AppCompatActivity {
 
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                finish();
+            }
+        });
+
+        /* MYPAGE 버튼 눌렀을 때*/
+        ImageButton btn_mypage = (ImageButton) findViewById(R.id.btn_mypage_day);
+        btn_mypage.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        /* SETTING 버튼 눌렀을 때 */
+        ImageButton btn_setting = (ImageButton) findViewById(R.id.btn_setting_day);
+        btn_setting.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Settingpage.class);
+
+                startActivity(intent);
                 finish();
             }
         });
