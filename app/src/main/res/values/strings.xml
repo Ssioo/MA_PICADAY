@@ -11,7 +11,8 @@
     <string name="icanuse">I CAN USE</string>
     <string name="title_hint">일정 제목</string>
     <string name="memo_hint">메모</string>
-    <string name="location_hint">위치</string>
+    <string name="location_hint">어디에서</string>
+    <string name="with_hint">누구랑</string>
     <string name="next">Next</string>
     <string name="prev">Prev</string>
 </resources>
