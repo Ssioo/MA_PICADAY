@@ -21,7 +21,7 @@
             style="@style/TextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
+            android:layout_marginTop="96dp"
             android:text="@string/thismonth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,29 +100,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:layout_width="277dp"
-            android:layout_height="363dp"
+            android:id="@+id/Total_calendar"
+            android:layout_width="266dp"
+            android:layout_height="412dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/icanuse_month"
             app:layout_constraintEnd_toStartOf="@+id/btn_next_month"
             app:layout_constraintStart_toEndOf="@+id/btn_prev_month"
             app:layout_constraintTop_toBottomOf="@+id/today_month">
-            <!--헤더-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:background="@color/warm_grey"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="16dp"
-                    android:text="CALENDAR"
-                    android:textSize="18sp" />
-            </LinearLayout>
 
             <!--요일뷰-->
             <LinearLayout
