@@ -10,7 +10,7 @@
         <item name="android:textSize">36sp</item>
         <item name="android:lineSpacingExtra">2sp</item>
         <item name="android:textColor">@color/warm_grey</item>
-        <item name="android:fontFamily">@font/american_captain</item>
+        <item name="fontFamily">@font/american_captain</item>
     </style>
 
 

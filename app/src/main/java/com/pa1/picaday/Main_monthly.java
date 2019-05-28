@@ -2,28 +2,14 @@ package com.pa1.picaday;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-
-import com.pa1.picaday.databinding.CalendarListBinding;
-import com.pa1.picaday.ui.adapter.CalendarAdapter;
-import com.pa1.picaday.ui.viewmodel.CalendarListViewModel;
-
-import java.util.ArrayList;
 
 public class Main_monthly extends AppCompatActivity {
 
-    private CalendarListBinding binding;
-    private CalendarListViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,35 +53,6 @@ public class Main_monthly extends AppCompatActivity {
             }
         });
 
-        binding = DataBindingUtil.setContentView(this, R.layout.main_monthly);
-        model = ViewModelProviders.of(this).get(CalendarListViewModel.class);
-        binding.setModel(model);
-        binding.setLifecycleOwner(this);
 
-        observe();
-        if (model != null) {
-            model.initCalendarList();
-        }
-    }
-
-    private void observe() {
-        model.mCalendarList.observe(this, new Observer<ArrayList<Object>>() {
-            @Override
-            public void onChanged(ArrayList<Object> objects) {
-                RecyclerView view = binding.pagerCalendar;
-                CalendarAdapter adapter = (CalendarAdapter) view.getAdapter();
-                if (adapter != null) {
-                    adapter.setCalendarList(objects);
-                } else {
-                    StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL);
-                    adapter = new CalendarAdapter(objects);
-                    view.setLayoutManager(manager);
-                    view.setAdapter(adapter);
-                    if (model.mCenterPosition >= 0) {
-                        view.scrollToPosition(model.mCenterPosition);
-                    }
-                }
-            }
-        });
     }
 }
