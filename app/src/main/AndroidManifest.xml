@@ -4,19 +4,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_picaday"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_picaday_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Settingpage" />
         <activity android:name=".Mypage" />
-        <activity android:name=".Main_monthly_add" />
-        <activity android:name=".Main_weekly_add" />
-        <activity android:name=".Main_daily_add" />
-        <activity android:name=".Main_monthly" />
-        <activity android:name=".Main_weekly" />
-        <activity android:name=".Main_daily">
+        <activity android:name=".AddActivity_monthly" />
+        <activity android:name=".AddActivity_weekly" />
+        <activity android:name=".AddActivity_daily" />
+        <activity android:name=".MainActivity_monthly" />
+        <activity android:name=".MainActivity_weekly" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

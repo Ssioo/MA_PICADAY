@@ -1,0 +1,37 @@
+package com.pa1.picaday;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+
+public class TabPagerAdapter extends FragmentStatePagerAdapter {
+
+    private int tabCount;
+
+    public TabPagerAdapter(FragmentManager fm, int tabCount) {
+        super(fm);
+        this.tabCount = tabCount;
+
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+        switch (i) {
+            case 0:
+                return new MainActivity_weekly();
+            case 1:
+                return new MainActivity_daily();
+            case 2:
+                return new MainActivity_monthly();
+
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return tabCount;
+    }
+}

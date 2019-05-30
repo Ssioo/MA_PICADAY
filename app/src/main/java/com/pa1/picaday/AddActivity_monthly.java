@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 
 
-public class Main_monthly_add extends AppCompatActivity {
+public class AddActivity_monthly extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class Main_monthly_add extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
 
-                //startActivity(new Intent(getApplicationContext(), Main_monthly.class));
+                //startActivity(new Intent(getApplicationContext(), MainActivity_monthly.class));
                 finish();
             }
         });
