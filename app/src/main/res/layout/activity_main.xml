@@ -12,24 +12,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@drawable/background_transparent"
         android:contentDescription="@string/mypage"
-        app:srcCompat="@mipmap/mypage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/mypage" />
 
     <ImageButton
         android:id="@+id/btn_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@drawable/background_transparent"
         android:contentDescription="@string/setting"
-        app:srcCompat="@mipmap/setting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toEndOf="@+id/btn_mypage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/setting" />
 
     <ImageButton
         android:id="@+id/btn_add"
@@ -37,25 +39,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/background_transparent"
         android:contentDescription="@string/add"
-        app:srcCompat="@mipmap/add"
         app:layout_constraintEnd_toStartOf="@+id/btn_setting"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_constraintTop_toBottomOf="@+id/btn_mypage"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/add" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_below="@+id/btn_mypage"
+        app:layout_constraintTop_toBottomOf="@+id/btn_mypage"
         tools:layout_editor_absoluteX="7dp" />
 
     <android.support.v4.view.ViewPager
@@ -79,5 +74,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="I CAN USE" />
+
+    <TextView
+        android:id="@+id/time_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/american_captain"
+        android:text="00H 00M 00S"
+        android:textAlignment="center"
+        android:textColor="@color/warm_blue"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icanuse_day" />
 
 </android.support.constraint.ConstraintLayout>

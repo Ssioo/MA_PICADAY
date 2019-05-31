@@ -22,20 +22,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
+        /* 상단 TAB 레이아웃 구성 */
         tabLayout = (TabLayout)findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("WEEKLY"));
         tabLayout.addTab(tabLayout.newTab().setText("DAILY"));
         tabLayout.addTab(tabLayout.newTab().setText("MONTHLY"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        /* 하단 메인 뷰페이저 구성 (DAILY, MONTHLY, WEEKLY 프래그먼트) */
         viewPager = findViewById(R.id.pager);
 
-        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 구성
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1); // Settingapge의 SharedPreference 값 받아서 수정예정.
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
