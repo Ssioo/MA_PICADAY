@@ -9,6 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
+
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -59,16 +63,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent;
                 switch (tabLayout.getSelectedTabPosition()) {
                     case 0:
-                        intent = new Intent(getApplicationContext(), AddActivity_weekly.class);
-                        startActivity(intent);
+                        AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
+                        addActivity_weekly.show(getSupportFragmentManager(), "add_weekly");
                         break;
                     case 1:
-                        intent = new Intent(getApplicationContext(), AddActivity_daily.class);
-                        startActivity(intent);
+                        AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
+                        addActivity_daily.show(getSupportFragmentManager(),"add_daily");
                         break;
                     case 2:
-                        intent = new Intent(getApplicationContext(), AddActivity_monthly.class);
-                        startActivity(intent);
+                        AddActivity_monthly addActivity_monthly = AddActivity_monthly.getInstance();
+                        addActivity_monthly.show(getSupportFragmentManager(), "add_monthly");
                         break;
                     default:
                         break;

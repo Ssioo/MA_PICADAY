@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="textEnd"
-    tools:context=".AddActivity_monthly">
+    tools:context=".AddActivity_Fragment.AddActivity_monthly">
 
     <ImageButton
         android:id="@+id/btn_cancel_month"

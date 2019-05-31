@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.pa1.picaday.MainActivity_Fragment.MainActivity_daily;
+import com.pa1.picaday.MainActivity_Fragment.MainActivity_monthly;
+import com.pa1.picaday.MainActivity_Fragment.MainActivity_weekly;
+
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 

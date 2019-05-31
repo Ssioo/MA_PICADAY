@@ -1,4 +1,4 @@
-package com.pa1.picaday;
+package com.pa1.picaday.MainActivity_Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pa1.picaday.R;
 
 
 public class MainActivity_daily extends Fragment {
@@ -20,7 +21,7 @@ public class MainActivity_daily extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.main_daily, container, false);
+        final View view = inflater.inflate(R.layout.activity_main_daily, container, false);
 
         return view;
     }

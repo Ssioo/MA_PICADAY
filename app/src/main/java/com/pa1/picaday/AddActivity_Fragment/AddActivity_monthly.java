@@ -1,46 +1,54 @@
-package com.pa1.picaday;
+package com.pa1.picaday.AddActivity_Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 
+import com.pa1.picaday.R;
 
-public class AddActivity_monthly extends AppCompatActivity {
 
+public class AddActivity_monthly extends BottomSheetDialogFragment {
+
+    public static AddActivity_monthly getInstance() { return new AddActivity_monthly();    }
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_monthly_add);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.add_monthly, container, false);
 
         /* V 버튼 눌렀을 때 */
-        ImageButton btn_check = (ImageButton) findViewById(R.id.btn_check_month);
+        ImageButton btn_check = (ImageButton) view.findViewById(R.id.btn_check_month);
         btn_check.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
+                //Intent intent = getIntent();
 
                 //startActivity(new Intent(getApplicationContext(), MainActivity_monthly.class));
-                finish();
+                dismiss();
             }
         });
 
         /* X 버튼 눌렀을 때 */
-        ImageButton btn_cancel = (ImageButton) findViewById(R.id.btn_cancel_month);
+        ImageButton btn_cancel = (ImageButton) view.findViewById(R.id.btn_cancel_month);
         btn_cancel.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                finish();
+                dismiss();
             }
         });
 
         /* 시간, 하루종일, 데드라인 형태 변환 체크 */
-        final CheckBox chk_time = (CheckBox) findViewById(R.id.chk_time);
-        final CheckBox chk_day = (CheckBox) findViewById(R.id.chk_day);
-        final CheckBox chk_deadline = (CheckBox) findViewById(R.id.chk_deadline);
+        final CheckBox chk_time = (CheckBox) view.findViewById(R.id.chk_time);
+        final CheckBox chk_day = (CheckBox) view.findViewById(R.id.chk_day);
+        final CheckBox chk_deadline = (CheckBox) view.findViewById(R.id.chk_deadline);
         chk_time.setOnClickListener(new CheckBox.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +73,7 @@ public class AddActivity_monthly extends AppCompatActivity {
                 chk_deadline.setChecked(true);
             }
         });
-
+        return view;
     }
+
 }
