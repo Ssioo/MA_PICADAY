@@ -9,8 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.pa1.picaday.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class AddActivity_monthly extends BottomSheetDialogFragment {
@@ -73,6 +79,37 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                 chk_deadline.setChecked(true);
             }
         });
+
+        /* TImePicker 구동 */
+
+        final Calendar today_calendar = Calendar.getInstance();
+        final Date today = today_calendar.getTime();
+        final SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일 HH:mm", Locale.getDefault());
+
+        final TextView text_tp_start = (TextView) view.findViewById(R.id.starttime);
+        if (text_tp_start.getText() == "") {
+            text_tp_start.setText(sdf.format(today));
+        }
+        text_tp_start.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        final TextView text_tp_end = (TextView) view.findViewById(R.id.endtime);
+        if (text_tp_end.getText() == "") {
+            text_tp_end.setText(sdf.format(today));
+        }
+        text_tp_end.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
         return view;
     }
 
