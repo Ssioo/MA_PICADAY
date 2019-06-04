@@ -14,12 +14,14 @@ public final class BaseDbContract {
         //baseDbEntry의 목록은 향후 정하기
         public static final String TABLE_NAME = "baseTable";
         public static final String COLUMN_NAME_TITLE = "name";
-        public static final String COLUMN_NAME_DATE_START = "dateStart";
-        public static final String COLUMN_NAME_DATE_END = "dateEnd";
-        public static final String COLUMN_NAME_TIME_START = "timeStart";
-        public static final String COLUMN_NAME_TIME_END = "timeEnd";
-        public static final String COLUMN_NAME_ALARM = "alarm";
+        public static final String COLUMN_NAME_START_TIME = "startTime";
+        public static final String COLUMN_NAME_END_TIME = "endTitle";
+        public static final String COLUMN_NAME_CHECKBOX_FIRST = "checkBoxFirst";
         public static final String COLUMN_NAME_LOCATION = "location";
+        public static final String COLUMN_NAME_WHO = "who";
+        public static final String COLUMN_NAME_PRIORITY = "priority";
+        public static final String COLUMN_NAME_PARTICIPATION = "participation";
+        public static final String COLUMN_NAME_CYCLE = "cycle";
         public static final String COLUMN_NAME_MEMO = "memo";
 
     }

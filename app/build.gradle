@@ -31,4 +31,5 @@ dependencies {
     implementation 'com.applandeo:material-calendar-view:1.4.0'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation 'com.android.support:design:28.0.0'
+    implementation project(path: ':MPChartLib')
 }
