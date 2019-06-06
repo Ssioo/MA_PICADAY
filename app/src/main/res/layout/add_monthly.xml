@@ -47,13 +47,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/startdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/text_start_month"
+        app:layout_constraintEnd_toStartOf="@+id/starttime"
+        app:layout_constraintTop_toTopOf="@+id/text_start_month" />
+
+    <TextView
         android:id="@+id/starttime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
+        android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@+id/text_start_month"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_start_month" />
+
+    <TextView
+        android:id="@+id/enddate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintBottom_toBottomOf="@+id/text_end_month"
+        app:layout_constraintEnd_toStartOf="@+id/endtime"
+        app:layout_constraintTop_toTopOf="@+id/text_end_month" />
 
     <TextView
         android:id="@+id/endtime"

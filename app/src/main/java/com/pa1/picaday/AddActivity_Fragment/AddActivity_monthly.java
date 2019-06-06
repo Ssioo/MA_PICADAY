@@ -1,5 +1,6 @@
 package com.pa1.picaday.AddActivity_Fragment;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
+import com.pa1.picaday.CustomTimePickerDialog;
 import com.pa1.picaday.R;
 
 import java.text.SimpleDateFormat;
@@ -84,27 +88,82 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
 
         final Calendar today_calendar = Calendar.getInstance();
         final Date today = today_calendar.getTime();
-        final SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일 HH:mm", Locale.getDefault());
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MMM dd일 (E) HH:mm", Locale.getDefault());
+        final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy년 MMM dd일 (E)", Locale.getDefault());
+        final SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
+        final TextView text_dp_start = (TextView) view.findViewById(R.id.startdate);
+        if (text_dp_start.getText() == "") {
+            text_dp_start.setText(sdf1.format(today));
+        }
         final TextView text_tp_start = (TextView) view.findViewById(R.id.starttime);
         if (text_tp_start.getText() == "") {
-            text_tp_start.setText(sdf.format(today));
+            text_tp_start.setText(sdf2.format(today));
         }
-        text_tp_start.setOnClickListener(new TextView.OnClickListener() {
+        final TextView text_dp_end = (TextView) view.findViewById(R.id.enddate);
+        if (text_dp_end.getText() == "") {
+            text_dp_end.setText(sdf1.format(today));
+        }
+        final TextView text_tp_end = (TextView) view.findViewById(R.id.endtime);
+        if (text_tp_end.getText() == "") {
+            text_tp_end.setText(sdf2.format(today));
+        }
+        final Calendar start_cal = Calendar.getInstance();
+        final Calendar end_cal = Calendar.getInstance();
+
+        text_dp_start.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        start_cal.set(year, month, dayOfMonth);
+                        text_dp_start.setText(sdf1.format(start_cal.getTime()));
+                    }
+                }, start_cal.get(Calendar.YEAR), start_cal.get(Calendar.MONTH), start_cal.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
             }
         });
 
-        final TextView text_tp_end = (TextView) view.findViewById(R.id.endtime);
-        if (text_tp_end.getText() == "") {
-            text_tp_end.setText(sdf.format(today));
-        }
+        text_dp_end.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        end_cal.set(year, month, dayOfMonth);
+                        text_dp_end.setText(sdf1.format(end_cal.getTime()));
+                    }
+                }, end_cal.get(Calendar.YEAR), end_cal.get(Calendar.MONTH), end_cal.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.show();
+            }
+        });
+
+        text_tp_start.setOnClickListener(new TextView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomTimePickerDialog customTimePickerDialog = new CustomTimePickerDialog(getActivity(), new CustomTimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        start_cal.set(start_cal.get(Calendar.YEAR), start_cal.get(Calendar.MONTH), start_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                        text_tp_start.setText(sdf2.format(start_cal.getTime()));
+                    }
+                }, start_cal.get(Calendar.HOUR_OF_DAY),start_cal.get(Calendar.MINUTE),false);
+                customTimePickerDialog.show();
+            }
+        });
+
         text_tp_end.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                CustomTimePickerDialog customTimePickerDialog = new CustomTimePickerDialog(getActivity(), new CustomTimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        end_cal.set(end_cal.get(Calendar.YEAR), end_cal.get(Calendar.MONTH), end_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                        text_tp_end.setText(sdf2.format(end_cal.getTime()));
+                    }
+                }, end_cal.get(Calendar.HOUR_OF_DAY), end_cal.get(Calendar.MINUTE), false);
+                customTimePickerDialog.show();
             }
         });
 
