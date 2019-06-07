@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -56,33 +58,22 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         });
 
         /* 시간, 하루종일, 데드라인 형태 변환 체크 */
-        final CheckBox chk_time = (CheckBox) view.findViewById(R.id.chk_time);
-        final CheckBox chk_day = (CheckBox) view.findViewById(R.id.chk_day);
-        final CheckBox chk_deadline = (CheckBox) view.findViewById(R.id.chk_deadline);
-        chk_time.setOnClickListener(new CheckBox.OnClickListener() {
+        RadioGroup chk_group = (RadioGroup) view.findViewById(R.id.chk_group);
+        chk_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                chk_time.setChecked(true);
-                chk_day.setChecked(false);
-                chk_deadline.setChecked(false);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.chk_day) {
+
+                }
+                if (checkedId == R.id.chk_time) {
+
+                }
+                if (checkedId == R.id.chk_deadline) {
+
+                }
             }
         });
-        chk_day.setOnClickListener(new CheckBox.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chk_time.setChecked(false);
-                chk_day.setChecked(true);
-                chk_deadline.setChecked(false);
-            }
-        });
-        chk_deadline.setOnClickListener(new CheckBox.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chk_day.setChecked(false);
-                chk_time.setChecked(false);
-                chk_deadline.setChecked(true);
-            }
-        });
+
 
         /* TImePicker 구동 */
 

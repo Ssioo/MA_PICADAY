@@ -44,47 +44,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <CheckBox
-        android:id="@+id/sel_day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:checked="true"
-        android:text="DAY"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sel_week" />
-
-    <CheckBox
-        android:id="@+id/sel_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="WEEK"
-        app:layout_constraintEnd_toStartOf="@+id/sel_month"
-        app:layout_constraintStart_toEndOf="@+id/sel_day"
-        app:layout_constraintTop_toBottomOf="@+id/text_start_theme" />
-
-    <CheckBox
-        android:id="@+id/sel_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="MONTH"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/sel_week" />
-
     <TextView
         android:id="@+id/text_timer_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/scdream4"
         android:text="타이머 스타일"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sel_week" />
+        app:layout_constraintTop_toBottomOf="@+id/timeselectGroup" />
+
+    <RadioGroup
+        android:id="@+id/timeselectGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:checkedButton="@id/sel_day"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_start_theme">
+
+        <RadioButton
+            android:id="@+id/sel_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="DAY" />
+
+        <RadioButton
+            android:id="@+id/sel_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="WEEK" />
+
+        <RadioButton
+            android:id="@+id/sel_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="MONTH" />
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
