@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
         /* 상단 TAB 레이아웃 구성 */
         tabLayout = (TabLayout)findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("WEEKLY"));
-        tabLayout.addTab(tabLayout.newTab().setText("DAILY"));
-        tabLayout.addTab(tabLayout.newTab().setText("MONTHLY"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic2_week));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic2_day));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic2_month));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         /* 하단 메인 뷰페이저 구성 (DAILY, MONTHLY, WEEKLY 프래그먼트) */

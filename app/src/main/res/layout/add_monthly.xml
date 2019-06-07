@@ -65,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/coral_red"
             android:fontFamily="@font/scdream4"
             android:text="시간" />
 
@@ -73,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/coral_red"
             android:fontFamily="@font/scdream4"
             android:text="하루종일" />
 
@@ -81,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:buttonTint="@color/coral_red"
             android:fontFamily="@font/scdream4"
             android:text="데드라인" />
     </RadioGroup>
@@ -193,6 +196,7 @@
         android:layout_marginEnd="24dp"
         android:isIndicator="false"
         android:numStars="4"
+        android:progressTint="@color/coral_red"
         android:rating="2"
         android:stepSize="1"
         app:layout_constraintEnd_toEndOf="parent"

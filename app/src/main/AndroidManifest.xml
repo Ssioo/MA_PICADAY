@@ -11,12 +11,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Settingpage" />
         <activity android:name=".Mypage" />
-        <activity android:name=".AddActivity_Fragment.AddActivity_monthly" />
-        <activity android:name=".AddActivity_Fragment.AddActivity_weekly" />
-        <activity android:name=".AddActivity_Fragment.AddActivity_daily" />
-        <activity android:name=".MainActivity_Fragment.MainActivity_monthly" />
-        <activity android:name=".MainActivity_Fragment.MainActivity_weekly" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
