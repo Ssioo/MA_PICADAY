@@ -34,110 +34,54 @@
         app:srcCompat="@mipmap/check" />
 
     <EditText
-        android:id="@+id/schedule_title"
+        android:id="@+id/schedule_title_monthly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
+        android:fontFamily="@font/scdream4"
         android:hint="@string/title_hint"
         android:inputType="textPersonName"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/startdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintBottom_toBottomOf="@+id/text_start_month"
-        app:layout_constraintEnd_toStartOf="@+id/starttime"
-        app:layout_constraintTop_toTopOf="@+id/text_start_month" />
-
-    <TextView
-        android:id="@+id/starttime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintBottom_toBottomOf="@+id/text_start_month"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_start_month" />
-
-    <TextView
-        android:id="@+id/enddate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintBottom_toBottomOf="@+id/text_end_month"
-        app:layout_constraintEnd_toStartOf="@+id/endtime"
-        app:layout_constraintTop_toTopOf="@+id/text_end_month" />
-
-    <TextView
-        android:id="@+id/endtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintBottom_toBottomOf="@+id/text_end_month"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_end_month" />
-
-    <TextView
-        android:id="@+id/text_start_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="시작"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/schedule_title" />
-
-    <TextView
-        android:id="@+id/text_end_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="종료"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_start_month" />
-
     <RadioGroup
-        android:id="@+id/chk_group"
+        android:id="@+id/chk_group_monthly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:checkedButton="@id/chk_time"
+        android:checkedButton="@id/chk_time_monthly"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_end_month">
+        app:layout_constraintTop_toBottomOf="@+id/schedule_title_monthly">
 
         <RadioButton
-            android:id="@+id/chk_time"
+            android:id="@+id/chk_time_monthly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/scdream4"
             android:text="시간" />
 
         <RadioButton
-            android:id="@+id/chk_day"
+            android:id="@+id/chk_day_monthly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/scdream4"
             android:text="하루종일" />
 
         <RadioButton
-            android:id="@+id/chk_deadline"
+            android:id="@+id/chk_deadline_monthly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/scdream4"
             android:text="데드라인" />
     </RadioGroup>
 
@@ -148,6 +92,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:fontFamily="@font/scdream4"
         android:hint="@string/memo_hint"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
@@ -160,10 +105,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
+        android:fontFamily="@font/scdream4"
         android:hint="@string/location_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chk_group" />
+        app:layout_constraintTop_toBottomOf="@+id/timeselect_picker_monthly" />
 
     <EditText
         android:id="@+id/withwhom"
@@ -172,6 +118,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
+        android:fontFamily="@font/scdream4"
         android:hint="@string/with_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -182,7 +129,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:fontFamily="@font/scdream4"
         android:text="우선순위"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/priority_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/priority_bar" />
@@ -192,7 +141,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:fontFamily="@font/scdream4"
         android:text="참여"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/participate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/participate" />
@@ -203,7 +154,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/scdream4"
         android:text="반복"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -212,7 +165,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:fontFamily="@font/scdream4"
         android:text="어디에서"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/location"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/location" />
@@ -222,7 +177,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:fontFamily="@font/scdream4"
         android:text="누구랑"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/withwhom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/withwhom" />
@@ -250,14 +207,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priority_bar" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
+    <Spinner
+        android:id="@+id/cycle_monthly"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown"
+        android:theme="@android:style/Theme.Holo.Light"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <FrameLayout
+        android:id="@+id/timeselect_picker_monthly"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chk_group_monthly" />
+
 
 </android.support.constraint.ConstraintLayout>

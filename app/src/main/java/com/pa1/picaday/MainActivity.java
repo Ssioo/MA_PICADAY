@@ -1,6 +1,7 @@
 package com.pa1.picaday;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,15 @@ public class MainActivity extends AppCompatActivity {
 
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 구성
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1); // Settingapge의 SharedPreference 값 받아서 수정예정.
+
+        /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
+        SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
+        if (style_settings.getBoolean("style_first_show_day", false))
+            viewPager.setCurrentItem(1);
+        else if (style_settings.getBoolean("style_first_show_week", false))
+            viewPager.setCurrentItem(0);
+        else if (style_settings.getBoolean("style_first_show_month", false))
+            viewPager.setCurrentItem(2);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

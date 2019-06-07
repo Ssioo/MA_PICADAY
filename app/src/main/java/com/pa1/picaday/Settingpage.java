@@ -7,15 +7,26 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 
 public class Settingpage extends AppCompatActivity {
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
+        final RadioGroup timeselectgroup = findViewById(R.id.timeselectGroup);
+
+        SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
+        if (style_settings.getBoolean("style_first_show_day", true))
+            timeselectgroup.check(R.id.sel_day);
+        else if (style_settings.getBoolean("style_first_show_week", false))
+            timeselectgroup.check(R.id.sel_week);
+        else if (style_settings.getBoolean("style_first_show_month", false))
+            timeselectgroup.check(R.id.sel_month);
 
         /* V 버튼 눌렀을 때 */
         ImageButton btn_check = (ImageButton) findViewById(R.id.btn_check_setting);
@@ -25,33 +36,24 @@ public class Settingpage extends AppCompatActivity {
                 //Intent intent = getIntent();
 
                 //startActivity(new Intent(getApplicationContext(), MainActivity_monthly.class));
+                SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
+                SharedPreferences.Editor editor = style_settings.edit();
+                if (timeselectgroup.getCheckedRadioButtonId() == R.id.sel_day) {
+                    editor.putBoolean("style_first_show_day", true);
+                }
+                else if (timeselectgroup.getCheckedRadioButtonId() == R.id.sel_week) {
+                    editor.putBoolean("style_first_show_day", false);
+                    editor.putBoolean("style_first_show_week", true);
+                }
+                else if (timeselectgroup.getCheckedRadioButtonId() == R.id.sel_month) {
+                    editor.putBoolean("style_first_show_day", false);
+                    editor.putBoolean("style_first_show_week", false);
+                    editor.putBoolean("style_first_show_month", true);
+                }
 
-                //SharedPreferences style_timer = getSharedPreferences("style_settings", MODE_PRIVATE);
 
-                //final SharedPreferences.Editor editor = style_timer.edit();
-                //int style_timer =;
-                //final int style_first_show = 1;
-                //editor.putInt("style_first_show", style_first_show);
-                //editor.putBoolean("style_first_show_day", true);
-                //editor.putBoolean("style_first_show_week", false);
-                //editor.putBoolean("style_first_show_month", false);
-                //editor.commit();
+                editor.commit();
 
-                RadioGroup timeselect = (RadioGroup) findViewById(R.id.timeselectGroup);
-                timeselect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        if (checkedId == R.id.sel_day) {
-
-                        }
-                        if (checkedId == R.id.sel_week) {
-
-                        }
-                        if (checkedId == R.id.sel_month) {
-
-                        }
-                    }
-                });
                 finish();
             }
         });
