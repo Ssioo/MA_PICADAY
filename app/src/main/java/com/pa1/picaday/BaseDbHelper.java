@@ -11,16 +11,18 @@ public class BaseDbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "BaseDb.db";
     //DB 생성 시 basic query문, 포맷 null 조건 등은 향후 지정
     private static final String SQL_CREATE_ENTRIES =
-            String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s DATE, %s DATE, %s TIME, %s TIME, %s DATETIME, %s TEXT, %s TEXT",
+            String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s TEXT, %s INTEGER, %s INTEGER, %s TEXT, %s TEXT)",
                     BaseDbContract.baseDbEntry.TABLE_NAME,
                     BaseDbContract.baseDbEntry._ID,
                     BaseDbContract.baseDbEntry.COLUMN_NAME_TITLE,
-                    BaseDbContract.baseDbEntry.COLUMN_NAME_DATE_START,
-                    BaseDbContract.baseDbEntry.COLUMN_NAME_DATE_END,
-                    BaseDbContract.baseDbEntry.COLUMN_NAME_TIME_START,
-                    BaseDbContract.baseDbEntry.COLUMN_NAME_TIME_END,
-                    BaseDbContract.baseDbEntry.COLUMN_NAME_ALARM,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_START_TIME,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_END_TIME,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_CHECKBOX_FIRST,
                     BaseDbContract.baseDbEntry.COLUMN_NAME_LOCATION,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_WHO,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_PRIORITY,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_PARTICIPATION,
+                    BaseDbContract.baseDbEntry.COLUMN_NAME_CYCLE,
                     BaseDbContract.baseDbEntry.COLUMN_NAME_MEMO);
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + BaseDbContract.baseDbEntry.TABLE_NAME;

@@ -1,5 +1,7 @@
 package com.pa1.picaday.AddActivity_Fragment;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.pa1.picaday.BaseDbContract;
+import com.pa1.picaday.BaseDbHelper;
 import com.pa1.picaday.R;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Day;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
@@ -35,6 +41,43 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 //Intent intent = getIntent();
+
+                /* v 버튼 클릭 시 db 저장 */
+                EditText schedule_title = (EditText) view.findViewById(R.id.schedule_title_monthly);
+                String s_title = schedule_title.getText().toString();
+                //String start_time
+                //String end_time
+                //int checkBox
+                EditText location = (EditText) view.findViewById(R.id.location);
+                String loc = location.getText().toString();
+                EditText withWhom = (EditText) view.findViewById(R.id.withwhom);
+                String who = withWhom.getText().toString();
+                //int prior
+                //int participate
+                //int cycle
+                EditText memo = (EditText) view.findViewById(R.id.memo);
+                String mem = memo.getText().toString();
+
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_TITLE, s_title);
+                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_START_TIME, start_time);
+                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_END_TIME, end_time);
+                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_CHECKBOX_FIRST, checkBox);
+                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_LOCATION, loc);
+                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_WHO, who);
+                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_PRIORITY, prior);
+                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_PARTICIPATION, participate);
+                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_CYCLE, cycle);
+                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_MEMO, mem);
+
+                SQLiteDatabase db = BaseDbHelper.getInstance(getActivity()).getWritableDatabase();
+                long newRowId = db.insert(BaseDbContract.baseDbEntry.TABLE_NAME, null, contentValues);
+
+                if (newRowId == -1){
+                    Toast.makeText(getActivity(), "저장에 문제가 발생했습니다", Toast.LENGTH_SHORT).show();
+                } else{
+                    Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
+                }
 
                 //startActivity(new Intent(getApplicationContext(), MainActivity_monthly.class));
                 dismiss();
