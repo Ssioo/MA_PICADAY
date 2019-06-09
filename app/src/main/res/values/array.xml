@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="chart_colorset">
+        <item>@color/warm_blue</item>
+        <item>@color/coral_red</item>
+        <item>@color/light_green</item>
+        <item>@color/light_skyblue</item>
+        <item>@color/light_brown</item>
+        <item>@color/purple</item>
+    </array>
+</resources>

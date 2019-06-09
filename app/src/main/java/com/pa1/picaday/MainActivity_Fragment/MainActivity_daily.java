@@ -35,10 +35,11 @@ public class MainActivity_daily extends Fragment {
         /* DB에 저장된 오늘 일정들을 표시,
         sp = start_cal의 hour, minute 부분의 long 값
         ep = end-cal의 hour, minute 부분의 long 값 */
+
         writing = new ArrayList<WritingVO>();
         Canvas canvas = new Canvas();
-        writing.add(new WritingVO(0, 24));
-        writing.add(new WritingVO(60, 288));
+        writing.add(new WritingVO(0, 144));
+        writing.add(new WritingVO(180, 240));
 
         FrameLayout daychart = view.findViewById(R.id.daychart);
         DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 200, 900);

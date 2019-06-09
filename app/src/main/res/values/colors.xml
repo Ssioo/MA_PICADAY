@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="warm_grey">#707070</color>
+    <color name="more_warm_grey">#AAAAAA</color>
     <color name="warm_blue">#7070EE</color>
     <color name="white">#FFFFFF</color>
     <color name="coral_red">#FFFF7272</color>
+    <color name="light_green">#B0CC72</color>
+    <color name="light_skyblue">#ABCDEF</color>
+    <color name="light_brown">#EDCBA0</color>
+    <color name="purple">#AC74BB</color>
+
+
 </resources>
