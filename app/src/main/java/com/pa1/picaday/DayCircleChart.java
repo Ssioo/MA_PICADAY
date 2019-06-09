@@ -26,37 +26,26 @@ public class DayCircleChart extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        final float START_POINT = -90f;
+        final float START_POINT = -90;
 
         final float ANGLE_PER_TIME = (float) 360/288;
-        float successPoint = (float)writing.get(0).getTotal_success()/(float)writing.get(0).getTot_stamp_cnt()*100;
-        successPoint = Math.round(successPoint*10);
-
-        successPoint = successPoint/(float)10.0;
-
-
-        float angle = successPoint*ANGLE_PER_TIME;
-
-
+        float partition = 0;
+        float angle = 0;
         RectF rectF = new RectF(x,x,y,y);
 
         Paint p = new Paint();
-
         p.setAntiAlias(true);
         p.setStyle(Paint.Style.STROKE);
         p.setStrokeWidth(y/6);
         p.setAlpha(0x00);
-        p.setColor(Color.GRAY);
+        p.setColor(getResources().getColor(R.color.warm_grey));
+        canvas.drawArc(rectF, 0, 360, false, p);
 
-        canvas.drawArc(rectF, START_POINT, -360 + angle, false, p);
-
-        p.setColor(Color.RED);
+        p.setColor(getResources().getColor(R.color.coral_red));
         p.setStrokeCap(Paint.Cap.BUTT);
-
-        canvas.drawArc(rectF, START_POINT, angle, false, p);
-
-        p.reset();
-        p.setColor(Color.BLACK);
+        for (int i=0; i<writing.size(); i++) {
+            canvas.drawArc(rectF, writing.get(i).getStart_point() + START_POINT, (writing.get(i).getEnd_point() - writing.get(i).getStart_point()) * ANGLE_PER_TIME, false, p);
+        }
 
 
     }

@@ -1,19 +1,16 @@
 package com.pa1.picaday;
 
+import java.util.Calendar;
+
 public class WritingVO {
-    float total_success = 0;
-    float tot_stamp_cnt = 0;
+    long start_point = 0;
+    long end_point = 0;
 
-    public WritingVO(float ts, float tsc) {
-        total_success = ts;
-        tot_stamp_cnt = tsc;
+    public WritingVO(long sp, long ep) {
+        start_point = sp;
+        end_point = ep;
     }
 
-    public float getTotal_success() {
-        return total_success;
-    }
-
-    public float getTot_stamp_cnt() {
-        return tot_stamp_cnt;
-    }
+    public long getStart_point() {return start_point;};
+    public long getEnd_point() {return end_point;};
 }
