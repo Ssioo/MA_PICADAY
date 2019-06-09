@@ -23,6 +23,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Timeselect_Time extends Fragment {
+    private Calendar start_cal = Calendar.getInstance();
+    private Calendar end_cal = Calendar.getInstance();
+
     public Timeselect_Time() {
     }
 
@@ -55,8 +58,6 @@ public class Timeselect_Time extends Fragment {
         if (text_tp_end.getText() == "") {
             text_tp_end.setText(sdf2.format(today));
         }
-        final Calendar start_cal = Calendar.getInstance();
-        final Calendar end_cal = Calendar.getInstance();
 
         text_dp_start.setOnClickListener(new TextView.OnClickListener() {
             @Override
@@ -157,5 +158,10 @@ public class Timeselect_Time extends Fragment {
             }
         });
         return view;
+    }
+
+    public void getCalTime(Calendar start_cal, Calendar end_cal){
+        start_cal.setTime(this.start_cal.getTime());
+        end_cal.setTime(this.end_cal.getTime());
     }
 }

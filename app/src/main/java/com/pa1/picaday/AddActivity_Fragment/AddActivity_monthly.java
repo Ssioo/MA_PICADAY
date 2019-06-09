@@ -24,8 +24,21 @@ import com.pa1.picaday.Timeselect_Fragment.Timeselect_Day;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Time;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class AddActivity_monthly extends BottomSheetDialogFragment {
+    private Timeselect_Day timeselect_day = new Timeselect_Day();
+    private Timeselect_Time timeselect_time = new Timeselect_Time();
+    private Timeselect_Deadline timeselect_deadline = new Timeselect_Deadline();
+    private RadioGroup chk_group = null;
+    private Calendar start_time = Calendar.getInstance();
+    private Calendar end_time = Calendar.getInstance();
+
+    public AddActivity_monthly() {
+    }
 
     public static AddActivity_monthly getInstance() { return new AddActivity_monthly();    }
 
@@ -45,8 +58,24 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                 /* v 버튼 클릭 시 db 저장 */
                 EditText schedule_title = (EditText) view.findViewById(R.id.schedule_title_monthly);
                 String s_title = schedule_title.getText().toString();
-                //String start_time
-                //String end_time
+                String s_time = null;
+                String e_time = null;
+                if (chk_group.getCheckedRadioButtonId() == R.id.chk_day_monthly) {
+                    timeselect_day.getCalDay(start_time, end_time);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                    s_time = simpleDateFormat.format(start_time.getTime());
+                    e_time = simpleDateFormat.format(end_time.getTime());
+                } else if(chk_group.getCheckedRadioButtonId() == R.id.chk_time_monthly){
+                    timeselect_time.getCalTime(start_time, end_time);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                    s_time = simpleDateFormat.format(start_time.getTime());
+                    e_time = simpleDateFormat.format(end_time.getTime());
+                } else if(chk_group.getCheckedRadioButtonId() == R.id.chk_deadline_monthly){
+                    timeselect_deadline.getCalDeadline(end_time);
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                    s_time = simpleDateFormat.format(start_time.getTime());
+                    e_time = simpleDateFormat.format(end_time.getTime());
+                }
                 //int checkBox
                 EditText location = (EditText) view.findViewById(R.id.location);
                 String loc = location.getText().toString();
@@ -60,8 +89,8 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
 
                 ContentValues contentValues = new ContentValues();
                 contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_TITLE, s_title);
-                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_START_TIME, start_time);
-                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_END_TIME, end_time);
+                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_START_TIME, s_time);
+                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_END_TIME, e_time);
                 //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_CHECKBOX_FIRST, checkBox);
                 contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_LOCATION, loc);
                 contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_WHO, who);
@@ -98,22 +127,22 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         fragmentTransaction.add(R.id.timeselect_picker_monthly, new Timeselect_Time()).commit();
 
         /* 시간, 하루종일, 데드라인 형태 변환 체크 */
-        RadioGroup chk_group = (RadioGroup) view.findViewById(R.id.chk_group_monthly);
+        chk_group = (RadioGroup) view.findViewById(R.id.chk_group_monthly);
         chk_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
                 if (checkedId == R.id.chk_day_monthly) {
                     /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, new Timeselect_Day());
+                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_day);
                 }
                 else if (checkedId == R.id.chk_time_monthly) {
                     /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, new Timeselect_Time());
+                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_time);
                 }
                 else if (checkedId == R.id.chk_deadline_monthly) {
                     /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, new Timeselect_Deadline());
+                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_deadline);
                 }
                 fragmentTransaction.commit();
             }
@@ -128,5 +157,4 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
 
         return view;
     }
-
 }

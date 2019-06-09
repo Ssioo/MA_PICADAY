@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Timeselect_Deadline extends Fragment {
+    private Calendar end_cal;
+
     public Timeselect_Deadline() {
     }
 
@@ -46,7 +48,7 @@ public class Timeselect_Deadline extends Fragment {
             text_tp_end.setText(sdf2.format(today));
         }
 
-        final Calendar end_cal = Calendar.getInstance();
+        end_cal = Calendar.getInstance();
         text_dp_end.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,5 +77,9 @@ public class Timeselect_Deadline extends Fragment {
         });
 
         return view;
+    }
+
+    public void getCalDeadline(Calendar end_cal){
+        end_cal = this.end_cal;
     }
 }
