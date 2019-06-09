@@ -30,9 +30,7 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
         btn_check.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = getIntent();
 
-                //startActivity(new Intent(getApplicationContext(), MainActivity_weekly.class));
                 dismiss();
             }
         });

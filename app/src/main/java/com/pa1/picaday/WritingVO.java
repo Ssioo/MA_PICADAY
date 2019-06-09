@@ -1,10 +1,9 @@
 package com.pa1.picaday;
 
-import java.util.Calendar;
 
 public class WritingVO {
-    long start_point = 0;
-    long end_point = 0;
+    private long start_point = 0;
+    private long end_point = 0;
 
     public WritingVO(long sp, long ep) {
         start_point = sp;

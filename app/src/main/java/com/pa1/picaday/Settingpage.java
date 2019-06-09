@@ -4,10 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 
@@ -33,9 +30,7 @@ public class Settingpage extends AppCompatActivity {
         btn_check.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = getIntent();
 
-                //startActivity(new Intent(getApplicationContext(), MainActivity_monthly.class));
                 SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
                 SharedPreferences.Editor editor = style_settings.edit();
                 if (timeselectgroup.getCheckedRadioButtonId() == R.id.sel_day) {

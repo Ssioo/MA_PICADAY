@@ -12,7 +12,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.R;
 
 import java.text.SimpleDateFormat;

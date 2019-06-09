@@ -34,8 +34,6 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
     private Timeselect_Time timeselect_time = new Timeselect_Time();
     private Timeselect_Deadline timeselect_deadline = new Timeselect_Deadline();
     private RadioGroup chk_group = null;
-    private Calendar start_time = Calendar.getInstance();
-    private Calendar end_time = Calendar.getInstance();
 
     public AddActivity_monthly() {
     }
@@ -53,8 +51,6 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         btn_check.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = getIntent();
-
                 /* v 버튼 클릭 시 db 저장 */
                 EditText schedule_title = (EditText) view.findViewById(R.id.schedule_title_monthly);
                 String s_title = schedule_title.getText().toString();
@@ -104,7 +100,6 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                     Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
                 }
 
-                //startActivity(new Intent(getApplicationContext(), MainActivity_monthly.class));
                 dismiss();
             }
         });

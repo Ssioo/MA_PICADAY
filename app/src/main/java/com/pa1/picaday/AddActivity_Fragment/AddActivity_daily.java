@@ -13,19 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
-import com.pa1.picaday.CustomTimePickerDialog;
 import com.pa1.picaday.R;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Time;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class AddActivity_daily extends BottomSheetDialogFragment {
     public static AddActivity_daily getInstance() {
@@ -42,9 +34,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
         btn_check.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = getIntent();
 
-                //startActivity(new Intent(getApplicationContext(), MainActivity_daily.class));
                 dismiss();
             }
         });
