@@ -23,8 +23,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Timeselect_Time extends Fragment {
-    private Calendar start_cal = Calendar.getInstance();
-    private Calendar end_cal = Calendar.getInstance();
+    public Calendar start_cal = Calendar.getInstance();
+    public Calendar end_cal = Calendar.getInstance();
 
     public Timeselect_Time() {
     }
@@ -140,7 +140,7 @@ public class Timeselect_Time extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar newCalendar = Calendar.getInstance();
-                        newCalendar.set(start_cal.get(Calendar.YEAR), start_cal.get(Calendar.MONTH), start_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                        newCalendar.set(end_cal.get(Calendar.YEAR), end_cal.get(Calendar.MONTH), end_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
                         Date newDate = newCalendar.getTime();
 
                         if (newDate.getTime() > start_cal.getTime().getTime()) {
@@ -158,10 +158,5 @@ public class Timeselect_Time extends Fragment {
             }
         });
         return view;
-    }
-
-    public void getCalTime(Calendar start_cal, Calendar end_cal){
-        start_cal.setTime(this.start_cal.getTime());
-        end_cal.setTime(this.end_cal.getTime());
     }
 }

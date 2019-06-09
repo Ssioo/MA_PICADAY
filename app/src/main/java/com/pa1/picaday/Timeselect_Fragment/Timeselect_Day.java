@@ -21,8 +21,8 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Timeselect_Day extends Fragment {
-    private Calendar start_cal;
-    private Calendar end_cal;
+    public Calendar start_cal;
+    public Calendar end_cal;
 
     public Timeselect_Day() {
         this.start_cal = null;
@@ -100,10 +100,5 @@ public class Timeselect_Day extends Fragment {
             }
         });
         return view;
-    }
-
-    public void getCalDay(Calendar start_cal, Calendar end_cal){
-        start_cal = this.start_cal;
-        end_cal = this.end_cal;
     }
 }

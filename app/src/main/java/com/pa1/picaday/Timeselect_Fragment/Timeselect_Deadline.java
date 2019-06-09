@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Timeselect_Deadline extends Fragment {
-    private Calendar end_cal;
+    public Calendar end_cal;
 
     public Timeselect_Deadline() {
     }
@@ -77,9 +77,5 @@ public class Timeselect_Deadline extends Fragment {
         });
 
         return view;
-    }
-
-    public void getCalDeadline(Calendar end_cal){
-        end_cal = this.end_cal;
     }
 }
