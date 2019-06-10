@@ -1,5 +1,6 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -42,7 +43,7 @@ public class MainActivity_daily extends Fragment {
         writing.add(new WritingVO(180, 240));
 
         FrameLayout daychart = view.findViewById(R.id.daychart);
-        DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 200, 900);
+        DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 100, 1000);
         daychart.addView(dayCircleChart);
 
         return view;
