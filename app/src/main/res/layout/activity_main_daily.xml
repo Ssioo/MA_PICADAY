@@ -8,6 +8,34 @@
 
 
     <TextView
+        android:id="@+id/icanuse_day_today"
+        style="@style/TextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:text="@string/icanuse"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="I CAN USE" />
+
+    <TextView
+        android:id="@+id/time_left_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/american_captain"
+        android:text="00H 00M 00S"
+        android:textAlignment="center"
+        android:textColor="@color/warm_blue"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icanuse_day_today" />
+
+    <TextView
         android:id="@+id/today_day"
         style="@style/TextStyle"
         android:layout_width="wrap_content"

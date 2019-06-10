@@ -8,10 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
+import com.pa1.picaday.MainActivity_Fragment.MainActivity_daily;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -106,5 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }
