@@ -146,6 +146,11 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         cycle_monthly.setAdapter(adapter);
 
 
+        /*select query*/
+
+
+
+
         return view;
     }
 }
