@@ -13,7 +13,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.pa1.picaday.CustomTimePickerDialog;
+import com.pa1.picaday.CustomUI.CustomTimePickerDialog;
 import com.pa1.picaday.R;
 
 import java.text.SimpleDateFormat;

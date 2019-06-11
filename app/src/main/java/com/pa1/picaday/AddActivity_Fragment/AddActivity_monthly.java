@@ -142,7 +142,7 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         /* 반복 사이클 결정 */
         Spinner cycle_monthly = (Spinner) view.findViewById(R.id.cycle_monthly);
         String[] items = new String[]{"없음", "매일", "매주", "격주", "매달"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
         cycle_monthly.setAdapter(adapter);
 
 

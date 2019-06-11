@@ -1,6 +1,6 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
-import android.graphics.Bitmap;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.pa1.picaday.DayCircleChart;
+import com.pa1.picaday.CustomUI.DayCircleChart;
+import com.pa1.picaday.CustomUI.DayCirclePin;
 import com.pa1.picaday.R;
-import com.pa1.picaday.WritingVO;
+import com.pa1.picaday.CustomUI.WritingVO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,9 +80,21 @@ public class MainActivity_daily extends Fragment {
 
         FrameLayout daychart = view.findViewById(R.id.daychart);
         DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 100, 1000);
+        DayCirclePin dayCirclePin = new DayCirclePin(getActivity(), 100, 1000);
         daychart.addView(dayCircleChart);
+        daychart.addView(dayCirclePin);
+
+        SharedPreferences sd = getActivity().getSharedPreferences("style_settings", 0);
 
         TextView lefttime = view.findViewById(R.id.time_left_today);
+        if (sd.getBoolean("style_timer1", false)) {
+            lefttime.setTypeface(getActivity().getResources().getFont(R.font.american_captain));
+            lefttime.setTextColor(getActivity().getResources().getColor(R.color.warm_blue));
+        }
+        else if (sd.getBoolean("style_timer2", false)) {
+            lefttime.setTypeface(getActivity().getResources().getFont(R.font.baemin_jua));
+            lefttime.setTextColor(getActivity().getResources().getColor(R.color.coral_red));
+        }
         Date today_left = new Date(today_left_time + standcal);
         SimpleDateFormat tempSDF = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
         lefttime.setText(tempSDF.format(today_left));

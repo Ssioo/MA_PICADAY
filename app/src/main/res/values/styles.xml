@@ -17,5 +17,13 @@
         <item name="fontFamily">@font/american_captain</item>
     </style>
 
+    <style name="TextStyle2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textColor">@color/warm_blue</item>
+        <item name="fontFamily">@font/baemin_jua</item>
+    </style>
+
 
 </resources>

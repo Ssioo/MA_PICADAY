@@ -1,4 +1,4 @@
-package com.pa1.picaday;
+package com.pa1.picaday.CustomUI;
 
 
 public class WritingVO {
