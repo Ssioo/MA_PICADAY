@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 
 public class Settingpage extends AppCompatActivity {
@@ -72,6 +73,7 @@ public class Settingpage extends AppCompatActivity {
                 }
 
                 editor.commit();
+                Toast.makeText(getApplicationContext(), "모든 설정은 앱을 다시 시작해야 적용됩니다", Toast.LENGTH_SHORT).show();
 
                 finish();
             }

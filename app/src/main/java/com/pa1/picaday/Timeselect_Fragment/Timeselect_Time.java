@@ -66,17 +66,17 @@ public class Timeselect_Time extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         Calendar newCalendar = Calendar.getInstance();
-                        newCalendar.set(year, month, dayOfMonth, start_cal.get(Calendar.HOUR_OF_DAY), start_cal.get(Calendar.MINUTE));
+                        newCalendar.set(year, month, dayOfMonth, start_cal.get(Calendar.HOUR_OF_DAY), start_cal.get(Calendar.MINUTE), 0);
 
                         Calendar newendCalendar = Calendar.getInstance();
                         Date newendDate = new Date(end_cal.getTime().getTime() - start_cal.getTime().getTime() + newCalendar.getTime().getTime());
                         newendCalendar.setTime(newendDate);
 
-                        start_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY), newCalendar.get(Calendar.MINUTE));
+                        start_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY), newCalendar.get(Calendar.MINUTE), 0);
                         text_dp_start.setText(sdf1.format(newCalendar.getTime()));
-                        end_cal.set(newendCalendar.get(Calendar.YEAR), newendCalendar.get(Calendar.MONTH), newendCalendar.get(Calendar.DAY_OF_MONTH), newendCalendar.get(Calendar.HOUR_OF_DAY), newendCalendar.get(Calendar.MINUTE));
+                        end_cal.set(newendCalendar.get(Calendar.YEAR), newendCalendar.get(Calendar.MONTH), newendCalendar.get(Calendar.DAY_OF_MONTH), newendCalendar.get(Calendar.HOUR_OF_DAY), newendCalendar.get(Calendar.MINUTE), 0);
                         text_dp_end.setText(sdf1.format(newendCalendar.getTime()));
-                        Toast.makeText(getActivity(), "Start Time Set Completed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "일정 시작 시간을 설정하였습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }, start_cal.get(Calendar.YEAR), start_cal.get(Calendar.MONTH), start_cal.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.show();
@@ -90,17 +90,17 @@ public class Timeselect_Time extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         Calendar newCalendar = Calendar.getInstance();
-                        newCalendar.set(year, month, dayOfMonth, end_cal.get(Calendar.HOUR_OF_DAY), end_cal.get(Calendar.MINUTE));
+                        newCalendar.set(year, month, dayOfMonth, end_cal.get(Calendar.HOUR_OF_DAY), end_cal.get(Calendar.MINUTE), 0);
                         Date newDate = newCalendar.getTime();
 
                         if (newDate.getTime() > start_cal.getTime().getTime()) {
                             text_dp_end.setText(sdf1.format(newDate));
                             end_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-                            Toast.makeText(getActivity(), "End Time Set Completed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "일정 종료 시간을 설정하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(getActivity(), "End Time Set Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "일정 종료 시간 설정에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, end_cal.get(Calendar.YEAR), end_cal.get(Calendar.MONTH), end_cal.get(Calendar.DAY_OF_MONTH));
@@ -115,18 +115,18 @@ public class Timeselect_Time extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar newCalendar = Calendar.getInstance();
-                        newCalendar.set(start_cal.get(Calendar.YEAR), start_cal.get(Calendar.MONTH), start_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                        newCalendar.set(start_cal.get(Calendar.YEAR), start_cal.get(Calendar.MONTH), start_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute, 0);
 
                         Calendar newendCalendar = Calendar.getInstance();
                         Date newendDate = new Date(end_cal.getTime().getTime() - start_cal.getTime().getTime() + newCalendar.getTime().getTime());
                         newendCalendar.setTime(newendDate);
 
-                        start_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY), newCalendar.get(Calendar.MINUTE));
+                        start_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY), newCalendar.get(Calendar.MINUTE), 0);
                         text_tp_start.setText(sdf2.format(newCalendar.getTime()));
-                        end_cal.set(newendCalendar.get(Calendar.YEAR), newendCalendar.get(Calendar.MONTH), newendCalendar.get(Calendar.DAY_OF_MONTH), newendCalendar.get(Calendar.HOUR_OF_DAY), newendCalendar.get(Calendar.MINUTE));
+                        end_cal.set(newendCalendar.get(Calendar.YEAR), newendCalendar.get(Calendar.MONTH), newendCalendar.get(Calendar.DAY_OF_MONTH), newendCalendar.get(Calendar.HOUR_OF_DAY), newendCalendar.get(Calendar.MINUTE), 0);
                         text_dp_end.setText(sdf1.format(newendCalendar.getTime()));
                         text_tp_end.setText(sdf2.format(newendCalendar.getTime()));
-                        Toast.makeText(getActivity(), "Start Time Set Completed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "일정 시작 시간을 설정하였습니다.", Toast.LENGTH_SHORT).show();
                     }
                 }, start_cal.get(Calendar.HOUR_OF_DAY),start_cal.get(Calendar.MINUTE),false);
                 customTimePickerDialog.show();
@@ -140,17 +140,17 @@ public class Timeselect_Time extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar newCalendar = Calendar.getInstance();
-                        newCalendar.set(end_cal.get(Calendar.YEAR), end_cal.get(Calendar.MONTH), end_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute);
+                        newCalendar.set(end_cal.get(Calendar.YEAR), end_cal.get(Calendar.MONTH), end_cal.get(Calendar.DAY_OF_MONTH), hourOfDay, minute, 0);
                         Date newDate = newCalendar.getTime();
 
                         if (newDate.getTime() > start_cal.getTime().getTime()) {
                             text_tp_end.setText(sdf2.format(newDate));
-                            end_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY), newCalendar.get(Calendar.MINUTE));
+                            end_cal.set(newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH), newCalendar.get(Calendar.HOUR_OF_DAY), newCalendar.get(Calendar.MINUTE), 0);
 
-                            Toast.makeText(getActivity(), "End Time Set Completed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "일정 종료 시간을 설정하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                         else {
-                            Toast.makeText(getActivity(), "End Time Set Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "일정 종료 시간 설정에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, end_cal.get(Calendar.HOUR_OF_DAY), end_cal.get(Calendar.MINUTE), false);
