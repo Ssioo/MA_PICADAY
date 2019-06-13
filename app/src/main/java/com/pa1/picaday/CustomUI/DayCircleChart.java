@@ -64,7 +64,8 @@ public class DayCircleChart extends View {
         p.setStrokeCap(Paint.Cap.BUTT);
         for (int i = 0; i < writing.size(); i++) {
             p.setColor(colorset[i % colorset.length]);
-            canvas.drawArc(rectF, writing.get(i).getStart_point() * ANGLE_PER_TIME + START_POINT, (writing.get(i).getEnd_point() - writing.get(i).getStart_point()) * ANGLE_PER_TIME, false, p);
+            canvas.drawArc(rectF, writing.get(i).getStart_point() * ANGLE_PER_TIME + START_POINT,
+                    (writing.get(i).getEnd_point() - writing.get(i).getStart_point()) * ANGLE_PER_TIME, false, p);
             // 시간 일정 정보 채우기
         }
 

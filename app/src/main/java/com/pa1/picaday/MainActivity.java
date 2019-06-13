@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton btn_mypage = (ImageButton) findViewById(R.id.btn_mypage);
         btn_mypage.setOnClickListener(new ImageButton.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Mypage.class);
+                Intent intent = new Intent(getApplicationContext(), SignIn_Activity.class);
 
                 startActivity(intent);
             }

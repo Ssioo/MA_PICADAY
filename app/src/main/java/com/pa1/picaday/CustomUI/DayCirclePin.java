@@ -20,7 +20,7 @@ import java.util.Locale;
 public class DayCirclePin extends View {
 
     int x, y;
-    private float ANGLE_PER_TIME = (float) 360/86400;
+    private static float ANGLE_PER_TIME = (float) 360/86400;
     private final SimpleDateFormat time = new SimpleDateFormat("a h:mm:ss", Locale.getDefault());
     private final Typeface textfont = Typeface.createFromAsset(getContext().getAssets(), "scdream4.otf");
 
