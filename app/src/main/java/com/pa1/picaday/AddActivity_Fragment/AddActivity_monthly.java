@@ -1,7 +1,5 @@
 package com.pa1.picaday.AddActivity_Fragment;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,15 +15,14 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.pa1.picaday.BaseDbContract;
-import com.pa1.picaday.BaseDbHelper;
+import com.pa1.picaday.CustomUI.Dateinfo;
+import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.R;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Day;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Time;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Locale;
 
 
@@ -56,19 +53,22 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                 String s_title = schedule_title.getText().toString();
                 String s_time = null;
                 String e_time = null;
+                int typechecked = 2;
                 if (chk_group.getCheckedRadioButtonId() == R.id.chk_day_monthly) {
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     s_time = simpleDateFormat.format(timeselect_day.start_cal.getTime());
                     e_time = simpleDateFormat.format(timeselect_day.end_cal.getTime());
+                    typechecked = 1;
                 } else if(chk_group.getCheckedRadioButtonId() == R.id.chk_time_monthly){
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     s_time = simpleDateFormat.format(timeselect_time.start_cal.getTime());
                     e_time = simpleDateFormat.format(timeselect_time.end_cal.getTime());
+                    typechecked = 2;
                 } else if(chk_group.getCheckedRadioButtonId() == R.id.chk_deadline_monthly){
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     e_time = simpleDateFormat.format(timeselect_deadline.end_cal.getTime());
+                    typechecked = 3;
                 }
-                //int checkBox
                 EditText location = (EditText) view.findViewById(R.id.location);
                 String loc = location.getText().toString();
                 EditText withWhom = (EditText) view.findViewById(R.id.withwhom);
@@ -79,26 +79,11 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                 EditText memo = (EditText) view.findViewById(R.id.memo);
                 String mem = memo.getText().toString();
 
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_TITLE, s_title);
-                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_START_TIME, s_time);
-                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_END_TIME, e_time);
-                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_CHECKBOX_FIRST, checkBox);
-                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_LOCATION, loc);
-                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_WHO, who);
-                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_PRIORITY, prior);
-                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_PARTICIPATION, participate);
-                //contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_CYCLE, cycle);
-                contentValues.put(BaseDbContract.baseDbEntry.COLUMN_NAME_MEMO, mem);
-
-                SQLiteDatabase db = BaseDbHelper.getInstance(getActivity()).getWritableDatabase();
-                long newRowId = db.insert(BaseDbContract.baseDbEntry.TABLE_NAME, null, contentValues);
-
-                if (newRowId == -1){
-                    Toast.makeText(getActivity(), "저장에 문제가 발생했습니다", Toast.LENGTH_SHORT).show();
-                } else{
-                    Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
-                }
+                Dateinfo newdateinfo = new Dateinfo(s_title, s_time, e_time,
+                        typechecked, loc, who, 2, 0, 0, mem);
+                DBManager manager = new DBManager(getActivity());
+                manager.insertData(newdateinfo);
+                Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
 
                 dismiss();
             }

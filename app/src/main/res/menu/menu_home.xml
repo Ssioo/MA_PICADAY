@@ -5,9 +5,9 @@
         android:title="ADD SCHEDULE"
         android:icon="@drawable/ic_add"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/action_auto"
+    <item android:id="@+id/action_refresh"
         android:title="AUTO ADJUSTMENT"
-        android:icon="@drawable/ic_auto"
+        android:icon="@drawable/ic_refresh"
         app:showAsAction="ifRoom" />
 
 </menu>

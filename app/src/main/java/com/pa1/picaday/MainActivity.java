@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
         SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
+        viewPager.setCurrentItem(0);
         if (style_settings.getBoolean("style_first_show_day", false))
             viewPager.setCurrentItem(1);
         else if (style_settings.getBoolean("style_first_show_week", false))
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             case R.id.action_add: {
-                switch (tabLayout.getSelectedTabPosition()) {
+                switch (viewPager.getCurrentItem()) {
                     case 0:
                         AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
                         addActivity_weekly.show(getSupportFragmentManager(), "add_weekly");
@@ -140,8 +141,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 return true;
             }
-            case R.id.action_auto: {
+            case R.id.action_refresh: {
                 // 일정 자동 세팅
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+                overridePendingTransition(0,0);
                 return true;
             }
         }
