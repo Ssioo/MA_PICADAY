@@ -72,7 +72,7 @@ public class MainActivity_daily extends Fragment {
         }
 
         for(int i=0; i<datacal.size(); i++) {
-            writing.add(new WritingVO((datacal.get(i).first.getTime() - standcal)/1000, (datacal.get(i).second.getTime() - standcal)/1000));
+            writing.add(new WritingVO((datacal.get(i).first.getTime() - standcal)/1000, (datacal.get(i).second.getTime() - standcal)/1000, today_list.get(i).getTitle()));
             today_left_time = today_left_time - (datacal.get(i).second.getTime() - datacal.get(i).first.getTime());
         }
 
