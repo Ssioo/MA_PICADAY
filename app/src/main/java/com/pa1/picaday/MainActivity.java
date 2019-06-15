@@ -16,8 +16,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
@@ -29,6 +33,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private DrawerLayout drawerlayout;
     private NavigationView navigationView;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
+    private TextView user_email;
+    private TextView btn_sign;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        btn_sign = findViewById(R.id.btn_sign);
+        btn_sign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SignIn_Activity.class));
+            }
+        });
         switch (item.getItemId()) {
             case android.R.id.home: {
                 drawerlayout = findViewById(R.id.drawerlayout);

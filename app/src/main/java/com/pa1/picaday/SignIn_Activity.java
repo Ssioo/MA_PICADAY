@@ -118,8 +118,8 @@ public class SignIn_Activity extends AppCompatActivity implements GoogleApiClien
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
-                Intent intent = new Intent(getApplicationContext(), Mypage.class);
-                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "GOOGLE SIGN IN SUCCESS", Toast.LENGTH_SHORT).show();
+                finish();
             }
             else {
                 Toast.makeText(getApplicationContext(), "GOOGLE SIGN IN FAILED Because" + result.getStatus().toString(), Toast.LENGTH_SHORT).show();

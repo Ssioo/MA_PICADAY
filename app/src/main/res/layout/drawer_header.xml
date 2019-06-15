@@ -12,6 +12,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="PICADAY"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:text="PICADAY" />
+
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/prompt_email" />
+
+    <TextView
+        android:id="@+id/btn_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="로그인" />
 </LinearLayout>

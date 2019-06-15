@@ -2,22 +2,35 @@ package com.pa1.picaday;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ImageButton;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
 public class Settingpage extends AppCompatActivity {
 
+    private Toolbar toolbar_setting;
+    private RadioGroup timeselectgroup;
+    private RadioGroup timerstylegroup;
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
+        /* Toolbar 구성 */
+        toolbar_setting = findViewById(R.id.toolbar_setting);
+        setSupportActionBar(toolbar_setting);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("설정");
+
         /* 초기 화면 설정 세팅 */
-        final RadioGroup timeselectgroup = findViewById(R.id.timeselectGroup);
+        timeselectgroup = findViewById(R.id.timeselectGroup);
 
         SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
         if (style_settings.getBoolean("style_first_show_day", true))
@@ -31,7 +44,7 @@ public class Settingpage extends AppCompatActivity {
 
 
         /* 남은 시계 시간 스타일 세팅 */
-        final RadioGroup timerstylegroup = findViewById(R.id.timerstyleGroup);
+        timerstylegroup = findViewById(R.id.timerstyleGroup);
 
         if (style_settings.getBoolean("style_timer1", true))
             timerstylegroup.check(R.id.timerstyle1);
@@ -39,12 +52,22 @@ public class Settingpage extends AppCompatActivity {
             timerstylegroup.check(R.id.timerstyle2);
 
 
-        /* V 버튼 눌렀을 때 */
-        ImageButton btn_check = (ImageButton) findViewById(R.id.btn_check_setting);
-        btn_check.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_setting, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {
+                finish();
+                return true;
+            }
+            case R.id.action_save: {
                 SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
                 SharedPreferences.Editor editor = style_settings.edit();
                 if (timeselectgroup.getCheckedRadioButtonId() == R.id.sel_day) {
@@ -76,17 +99,9 @@ public class Settingpage extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "모든 설정은 앱을 다시 시작해야 적용됩니다", Toast.LENGTH_SHORT).show();
 
                 finish();
+                return true;
             }
-        });
-
-        /* X 버튼 눌렀을 때 */
-        ImageButton btn_cancel = (ImageButton) findViewById(R.id.btn_cancel_setting);
-        btn_cancel.setOnClickListener(new ImageButton.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                finish();
-            }
-        });
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
