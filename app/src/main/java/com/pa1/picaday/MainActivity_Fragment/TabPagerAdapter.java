@@ -1,4 +1,4 @@
-package com.pa1.picaday;
+package com.pa1.picaday.MainActivity_Fragment;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;

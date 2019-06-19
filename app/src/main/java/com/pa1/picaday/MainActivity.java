@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
+import com.pa1.picaday.MainActivity_Fragment.TabPagerAdapter;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic2_month));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+
         /* 뷰페이저 구성 (DAILY, MONTHLY, WEEKLY 프래그먼트) */
         viewPager = findViewById(R.id.pager);
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 구성
@@ -67,13 +69,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
         SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
-        viewPager.setCurrentItem(0);
-        if (style_settings.getBoolean("style_first_show_day", false))
+
+        if (style_settings.getBoolean("style_first_show_day", false)) {
             viewPager.setCurrentItem(1);
-        else if (style_settings.getBoolean("style_first_show_week", false))
+            tabLayout.getTabAt(1).select();
+        }
+        else if (style_settings.getBoolean("style_first_show_week", false)) {
             viewPager.setCurrentItem(0);
-        else if (style_settings.getBoolean("style_first_show_month", false))
+            tabLayout.getTabAt(0).select();
+        }
+        else if (style_settings.getBoolean("style_first_show_month", false)) {
             viewPager.setCurrentItem(2);
+            tabLayout.getTabAt(2).select();
+        }
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -123,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             case R.id.action_add: {
-                switch (viewPager.getCurrentItem()) {
+                switch (tabLayout.getSelectedTabPosition()) {
                     case 0:
                         AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
                         addActivity_weekly.show(getSupportFragmentManager(), "add_weekly");

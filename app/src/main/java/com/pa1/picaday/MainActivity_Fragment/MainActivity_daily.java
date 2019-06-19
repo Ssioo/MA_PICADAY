@@ -103,40 +103,5 @@ public class MainActivity_daily extends Fragment {
         return view;
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        datacal.clear();
-        today_list.clear();
-        writing.clear();
 
-        Calendar standardCal = Calendar.getInstance();
-        standardCal.set(standardCal.get(Calendar.YEAR),standardCal.get(Calendar.MONTH),standardCal.get(Calendar.DAY_OF_MONTH), 0,0,0);
-        long standcal = standardCal.getTime().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-
-
-        DBManager manager = new DBManager(getActivity());
-        today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
-        for (int i=0;i<today_list.size();i++) {
-            try {
-                datacal.add(new Pair<>(sdf_full.parse(today_list.get(i).getStart_time()),
-                        sdf_full.parse(today_list.get(i).getEnd_time())));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-
-        for(int i=0; i<datacal.size(); i++) {
-            writing.add(new WritingVO((datacal.get(i).first.getTime() - standcal)/1000, (datacal.get(i).second.getTime() - standcal)/1000));
-            today_left_time = today_left_time - (datacal.get(i).second.getTime() - datacal.get(i).first.getTime());
-        }
-
-        *//*FrameLayout daychart = view.findViewById(R.id.daychart);
-        DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 100, 1000);
-        DayCirclePin dayCirclePin = new DayCirclePin(getActivity(), 100, 1000);
-        daychart.addView(dayCircleChart);
-        daychart.addView(dayCirclePin);*//*
-    }*/
 }

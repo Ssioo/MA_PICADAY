@@ -72,7 +72,7 @@ public class DayCircleChart extends View {
             canvas.drawArc(rectF, startAngle, sweepAngle, false, p);
             p.reset();
             p.setTextAlign(Paint.Align.CENTER);
-            p.setColor(getResources().getColor(R.color.warm_grey));
+            p.setColor(getResources().getColor(R.color.black));
             p.setTextSize(36);
             p.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "scdream4.otf"));
             canvas.rotate(startAngle + 90 + sweepAngle / 2,(x+y)/2,(x+y)/2);
