@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser currentUser;
     private TextView user_email;
     private TextView btn_sign;
-
+    private boolean listmode = false;
 
 
     @Override
@@ -65,26 +65,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /* 뷰페이저 구성 (DAILY, MONTHLY, WEEKLY 프래그먼트) */
         viewPager = findViewById(R.id.pager);
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 3개짜리 구성
+        adapter.setListmode(false);
         viewPager.setAdapter(adapter);
 
-        /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
-        SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
-
-        if (style_settings.getBoolean("style_first_show_day", false)) {
-            viewPager.setCurrentItem(1);
-            tabLayout.getTabAt(1).select();
-        }
-        else if (style_settings.getBoolean("style_first_show_week", false)) {
-            viewPager.setCurrentItem(0);
-            tabLayout.getTabAt(0).select();
-        }
-        else if (style_settings.getBoolean("style_first_show_month", false)) {
-            viewPager.setCurrentItem(2);
-            tabLayout.getTabAt(2).select();
-        }
+        /* 뷰페이저 초기화 */
+        Init_from_setting();
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -99,18 +86,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-        /* Navigation Drawer 클릭 이벤트*/
+        /* Navigation Drawer 클릭 이벤트 호출 */
         drawerlayout = findViewById(R.id.drawerlayout);
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /* 메뉴바 생성 */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
+
+    /* 메뉴바 item 선택 액션 */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -131,9 +121,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             case R.id.action_list: {
-                if (tabLayout.getSelectedTabPosition() == 1) {
-
+                TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+                if (listmode) {
+                    listmode = false;
                 }
+                else {
+                    listmode = true;
+                }
+                adapter.setListmode(listmode);
+                viewPager.setAdapter(adapter);
+                viewPager.setCurrentItem(tabLayout.getSelectedTabPosition());
+
                 return true;
             }
             case R.id.action_add: {
@@ -167,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    /* 네비게이션 드로어 item 선택 액션 */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Log.e("item", String.valueOf(menuItem.getItemId()));
@@ -194,5 +193,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerlayout.closeDrawer(GravityCompat.START);
         }
         else {super.onBackPressed();}
+    }
+
+    public void Init_from_setting() {
+        /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
+        SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
+
+        if (style_settings.getBoolean("style_first_show_day", false)) {
+            viewPager.setCurrentItem(1);
+            tabLayout.getTabAt(1).select();
+        }
+        else if (style_settings.getBoolean("style_first_show_week", false)) {
+            viewPager.setCurrentItem(0);
+            tabLayout.getTabAt(0).select();
+        }
+        else if (style_settings.getBoolean("style_first_show_month", false)) {
+            viewPager.setCurrentItem(2);
+            tabLayout.getTabAt(2).select();
+        }
     }
 }

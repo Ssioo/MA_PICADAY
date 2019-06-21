@@ -131,12 +131,41 @@ public class DBManager {
         db.execSQL(sql);
     }
 
-    // 데이터 전체 검색_today
+    // 데이터 전체 검색_today, thismonth
     public ArrayList<Dateinfo> selectAll_today(String date) {
         String selectsql = "SELECT * FROM " + TABLE_NAME
                 + " WHERE " + COLUMN_NAME_START_TIME
                 + " LIKE '" + date + "%'"
-                + " ORDER BY " + COLUMN_NAME_START_TIME + ";";
+                + " ORDER BY " + COLUMN_NAME_START_TIME + ";"; // date의 substring과 일치한 부분을 고른다.
+        Cursor results = db.rawQuery(selectsql, null);
+        Log.e("selectsql", selectsql);
+        results.moveToFirst();
+        ArrayList<Dateinfo> infos = new ArrayList<>();
+        //Log.e("test", results.getString(1));
+        while (!results.isAfterLast()) {
+            Dateinfo info = new Dateinfo(results.getString(1),
+                    results.getString(2),
+                    results.getString(3),
+                    results.getInt(4),
+                    results.getString(5),
+                    results.getString(6),
+                    results.getInt(7),
+                    results.getInt(8),
+                    results.getString(9),
+                    results.getString(10));
+            infos.add(info);
+            results.moveToNext();
+        }
+        results.close();
+        return infos;
+    }
+    // 데이터 전체 검색_today, thismonth
+    public ArrayList<Dateinfo> selectAll_thisweek(String date_start, String date_end) {
+        String selectsql = "SELECT * FROM " + TABLE_NAME
+                + " WHERE " + COLUMN_NAME_START_TIME
+                + " BETWEEN '" + date_start + "'"
+                + " AND '" + date_end + "'"
+                + " ORDER BY " + COLUMN_NAME_START_TIME + ";"; // date의 substring과 일치한 부분을 고른다.
         Cursor results = db.rawQuery(selectsql, null);
         Log.e("selectsql", selectsql);
         results.moveToFirst();

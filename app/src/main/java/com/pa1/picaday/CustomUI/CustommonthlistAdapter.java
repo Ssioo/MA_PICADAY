@@ -10,31 +10,21 @@ import android.widget.TextView;
 
 import com.pa1.picaday.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class CustomdaylistAdapter extends BaseAdapter {
-
-    private ArrayList<Dateinfo> dayitemlist = new ArrayList<>();
-
-    public CustomdaylistAdapter() {
+public class CustommonthlistAdapter extends BaseAdapter {
+    private ArrayList<Dateinfo> monthitemlist = new ArrayList<>();
+    public CustommonthlistAdapter() {
     }
 
     @Override
-    public int getCount() {
-        return dayitemlist.size();
-    }
+    public int getCount() { return monthitemlist.size(); }
 
     @Override
-    public Object getItem(int position) {
-        return dayitemlist.get(position);
-    }
+    public Object getItem(int position) { return monthitemlist.get(position); }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -48,8 +38,11 @@ public class CustomdaylistAdapter extends BaseAdapter {
 
         TextView title = convertView.findViewById(R.id.daylist_title);
         TextView description = convertView.findViewById(R.id.daylist_start_end_time);
-        title.setText(dayitemlist.get(position).getTitle());
-        description.setText(dayitemlist.get(position).getStart_time().substring(11,16) + " ~ " + dayitemlist.get(position).getEnd_time().substring(11,16));
+        title.setText(monthitemlist.get(position).getTitle());
+        description.setText(monthitemlist.get(position).getStart_time().substring(8,10) + "일 "
+                + monthitemlist.get(position).getStart_time().substring(10,16) + " ~ "
+                + monthitemlist.get(position).getEnd_time().substring(8,10) + "일 "
+                + monthitemlist.get(position).getEnd_time().substring(10,16));
 
 
         ImageButton btn_daylist_edit = convertView.findViewById(R.id.btn_daylist_edit);
@@ -69,11 +62,7 @@ public class CustomdaylistAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void addItem(Dateinfo dinfo) {
-        dayitemlist.add(dinfo);
-    }
-
     public void addList(ArrayList<Dateinfo> dinfos) {
-        dayitemlist = dinfos;
+        monthitemlist = dinfos;
     }
 }

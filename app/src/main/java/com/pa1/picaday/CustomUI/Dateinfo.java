@@ -6,6 +6,8 @@ public class Dateinfo {
     private String title = "";
     private String Start_time = null;
     private String End_time = null;
+    private int start_day;
+    private int end_day;
     private int type_checked = 0;
     private String location = "";
     private String withwhom = "";
@@ -40,22 +42,13 @@ public class Dateinfo {
     //public void setId(int id) { this.id = id; }
 
     public String getTitle() { return title; }
-
     public String getStart_time() { return Start_time; }
-
     public String getEnd_time() { return End_time; }
-
     public int getPriority() { return priority; }
-
     public int getType_checked() { return type_checked; }
-
     public String getLocation() { return location; }
-
     public String getWithwhom() { return withwhom; }
-
     public int getParticipation() { return participation; }
-
     public String getCycle() {return cycle;}
-
     public String getMemo() { return memo; }
 }

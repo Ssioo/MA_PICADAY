@@ -13,6 +13,7 @@ import com.pa1.picaday.MainActivity_Fragment.MainActivity_weekly;
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     private int tabCount;
+    private boolean listmode = false;
 
     public TabPagerAdapter(FragmentManager fm, int tabCount) {
         super(fm);
@@ -20,16 +21,27 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
 
     }
 
+    public void setListmode(boolean listmode) { this.listmode = listmode; }
+    public boolean isListmode() { return listmode; }
+
     @Override
     public Fragment getItem(int i) {
         switch (i) {
             case 0:
-                return new MainActivity_weekly();
+                if (!listmode)
+                    return new MainActivity_weekly();
+                else
+                    return new MainActivity_weekly_list();
             case 1:
-                //return new MainActivity_daily();
-                return new MainActivity_daily_list();
+                if (!listmode)
+                    return new MainActivity_daily();
+                else
+                    return new MainActivity_daily_list();
             case 2:
-                return new MainActivity_monthly();
+                if (!listmode)
+                    return new MainActivity_monthly();
+                else
+                    return new MainActivity_monthly_list();
 
             default:
                 return null;
