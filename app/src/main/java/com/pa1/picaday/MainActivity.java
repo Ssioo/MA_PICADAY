@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         /* 뷰페이저 구성 (DAILY, MONTHLY, WEEKLY 프래그먼트) */
         viewPager = findViewById(R.id.pager);
-        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 구성
+        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 3개짜리 구성
         viewPager.setAdapter(adapter);
 
         /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
@@ -130,6 +130,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             }
 
+            case R.id.action_list: {
+                if (tabLayout.getSelectedTabPosition() == 1) {
+
+                }
+                return true;
+            }
             case R.id.action_add: {
                 switch (tabLayout.getSelectedTabPosition()) {
                     case 0:

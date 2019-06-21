@@ -2,13 +2,11 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity_Fragment.MainActivity_monthly">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/icanuse_day_thismonth"
+        android:id="@+id/icanuse_day_today_list"
         style="@style/TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,14 +14,14 @@
         android:text="@string/icanuse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="I CAN USE" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/time_left_thismonth"
+        android:id="@+id/time_left_today_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/american_captain"
         android:text="00H 00M 00S"
@@ -33,25 +31,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icanuse_day_thismonth" />
+        app:layout_constraintTop_toBottomOf="@+id/icanuse_day_today_list" />
 
     <TextView
-        android:id="@+id/today_month"
+        android:id="@+id/today_day_list"
         style="@style/TextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/thismonth"
+        android:text="@string/today"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="THIS MONTH" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        layout="@layout/custom_calendarview"
-        app:layout_constraintBottom_toTopOf="@+id/icanuse_day_thismonth"
-        app:layout_constraintTop_toBottomOf="@+id/today_month"
-        tools:layout_editor_absoluteX="0dp" />
-
-
+    <ListView
+        android:id="@+id/daylist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/icanuse_day_today_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/today_day_list" />
 </android.support.constraint.ConstraintLayout>

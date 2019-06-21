@@ -135,7 +135,8 @@ public class DBManager {
     public ArrayList<Dateinfo> selectAll_today(String date) {
         String selectsql = "SELECT * FROM " + TABLE_NAME
                 + " WHERE " + COLUMN_NAME_START_TIME
-                + " LIKE '" + date + "%';";
+                + " LIKE '" + date + "%'"
+                + " ORDER BY " + COLUMN_NAME_START_TIME + ";";
         Cursor results = db.rawQuery(selectsql, null);
         Log.e("selectsql", selectsql);
         results.moveToFirst();

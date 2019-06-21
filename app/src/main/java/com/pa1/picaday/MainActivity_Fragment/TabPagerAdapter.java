@@ -26,7 +26,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new MainActivity_weekly();
             case 1:
-                return new MainActivity_daily();
+                //return new MainActivity_daily();
+                return new MainActivity_daily_list();
             case 2:
                 return new MainActivity_monthly();
 
