@@ -20,7 +20,7 @@ import java.util.Locale;
 public class DayCirclePin extends View {
 
     int x, y;
-    private float ANGLE_PER_TIME = (float) 360/86400;
+    private static float ANGLE_PER_TIME = (float) 360/86400;
     private final SimpleDateFormat time = new SimpleDateFormat("a h:mm:ss", Locale.getDefault());
     private final Typeface textfont = Typeface.createFromAsset(getContext().getAssets(), "scdream4.otf");
 
@@ -53,7 +53,7 @@ public class DayCirclePin extends View {
 
 
         canvas.rotate(rpin, (float) (x+y)/2, (float) (x+y)/2); // 현재 시간 시계 침 그리기
-        canvas.drawBitmap(pin, null, new Rect(x,x,y,y), null);
+        canvas.drawBitmap(pin, null, new Rect(521,100,578,580), null);
         canvas.rotate(-rpin, (float) (x+y)/2, (float) (x+y)/2);
 
         Paint p = new Paint();

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1004521726143",
+    "firebase_url": "https://ma-picaday.firebaseio.com",
+    "project_id": "ma-picaday",
+    "storage_bucket": "ma-picaday.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004521726143:android:280f21186f73a1c6",
+        "android_client_info": {
+          "package_name": "com.pa1.picaday"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1004521726143-7sgm1mgf063mmlqk7khnj9g7tgm6ev2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pa1.picaday",
+            "certificate_hash": "20e0dd8941a849b2cbfbef4654399bd03ad419b8"
+          }
+        },
+        {
+          "client_id": "1004521726143-e8kj3s91elb67kvq6d64avqo1m6iao8r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGrXtX6prYvJ9ekw9GN_Joa1AXSRqA1_c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1004521726143-e8kj3s91elb67kvq6d64avqo1m6iao8r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -53,18 +53,31 @@ public class DayCircleChart extends View {
         canvas.drawBitmap(clock_background, null, new Rect(x,x,y,y), null); // 시계 배경 그리기
 
         Paint p = new Paint();
-        p.setAntiAlias(true);
-        p.setStyle(Paint.Style.STROKE);
-        p.setStrokeWidth(y/24);
-        p.setAlpha(0x00);
-        p.setColor(getResources().getColor(R.color.more_warm_grey));
+
+        //p.setColor(getResources().getColor(R.color.more_warm_grey));
         //canvas.drawArc(rectF, 0, 360, false, p); // 배경칠하기
 
 
-        p.setStrokeCap(Paint.Cap.BUTT);
+
         for (int i = 0; i < writing.size(); i++) {
+            p.reset();
+            p.setAntiAlias(true);
+            p.setStyle(Paint.Style.STROKE);
+            p.setStrokeWidth(y/24);
+            p.setAlpha(0x00);
+            p.setStrokeCap(Paint.Cap.BUTT);
             p.setColor(colorset[i % colorset.length]);
-            canvas.drawArc(rectF, writing.get(i).getStart_point() * ANGLE_PER_TIME + START_POINT, (writing.get(i).getEnd_point() - writing.get(i).getStart_point()) * ANGLE_PER_TIME, false, p);
+            float startAngle = writing.get(i).getStart_point() * ANGLE_PER_TIME + START_POINT;
+            float sweepAngle = (writing.get(i).getEnd_point() - writing.get(i).getStart_point()) * ANGLE_PER_TIME;
+            canvas.drawArc(rectF, startAngle, sweepAngle, false, p);
+            p.reset();
+            p.setTextAlign(Paint.Align.CENTER);
+            p.setColor(getResources().getColor(R.color.black));
+            p.setTextSize(36);
+            p.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "scdream4.otf"));
+            canvas.rotate(startAngle + 90 + sweepAngle / 2,(x+y)/2,(x+y)/2);
+            canvas.drawText(writing.get(i).getTitle(), (x+y)/2, x + 10, p);
+            canvas.rotate((startAngle + 90 + sweepAngle / 2) * (-1), (x+y)/2, (x+y)/2);
             // 시간 일정 정보 채우기
         }
 
