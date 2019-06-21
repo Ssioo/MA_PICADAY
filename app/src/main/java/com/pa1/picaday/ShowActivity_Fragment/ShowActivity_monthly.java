@@ -37,7 +37,7 @@ public class ShowActivity_monthly extends BottomSheetDialogFragment {
 //        Cursor cursor = dbHelper.getReadableDatabase()
 //                .query(BaseDbContract.baseDbEntry.TABLE_NAME,
 //                        null, null, null, null, null, null);
-        
+
 
         Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT "+BaseDbContract.baseDbEntry.COLUMN_NAME_TITLE
                 +" FROM "+BaseDbContract.baseDbEntry.TABLE_NAME
