@@ -63,7 +63,7 @@ public class DBManager {
 
             String createSql = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
                             "%s TEXT, %s TEXT, %s TEXT, " +
-                            "%s INTEGER, %s TEXT, %s TEXT, %s INTEGER, %s INTEGER, %s INTEGER, %s TEXT)",
+                            "%s INTEGER, %s TEXT, %s TEXT, %s INTEGER, %s INTEGER, %s TEXT, %s TEXT)",
                     TABLE_NAME,
                     COLUMN_NAME_ID,
                     COLUMN_NAME_TITLE,
@@ -102,8 +102,8 @@ public class DBManager {
                 + info.getLocation() + "', '"
                 + info.getWithwhom() + "', "
                 + info.getPriority() + ", "
-                + info.getParticipation() + ", "
-                + 0 + ", '"
+                + info.getParticipation() + ", '"
+                + info.getCycle() + "', '"
                 + info.getMemo() + "');";
         db.execSQL(insertsql);
 
@@ -150,7 +150,7 @@ public class DBManager {
                     results.getString(6),
                     results.getInt(7),
                     results.getInt(8),
-                    results.getInt(9),
+                    results.getString(9),
                     results.getString(10));
             infos.add(info);
             results.moveToNext();

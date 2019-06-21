@@ -1,4 +1,4 @@
-package com.pa1.picaday.ShowActivity_Fragment;
+/*package com.pa1.picaday.ShowActivity_Fragment;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -29,9 +29,9 @@ public class ShowActivity_monthly extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.show_monthly, container, false);
-
+*/
         /*List 출력 - 입력 값 필요*/
-        ListView listView = view.findViewById(R.id.show_list);
+ /*       ListView listView = view.findViewById(R.id.show_list);
 
         BaseDbHelper dbHelper = BaseDbHelper.getInstance(getActivity());
 //        Cursor cursor = dbHelper.getReadableDatabase()
@@ -45,9 +45,9 @@ public class ShowActivity_monthly extends BottomSheetDialogFragment {
                 +" BETWEEN \"2019-06-09 00:00:00\"  AND \"2019-06-09 23:59:59\"", null);
         ShowAdapter adapter = new ShowAdapter(getActivity(), cursor);
         listView.setAdapter(adapter);
-
+*/
         /*item click 시 - 추후 구현*/
-
+/*
         return view;
     }
 
@@ -69,3 +69,4 @@ public class ShowActivity_monthly extends BottomSheetDialogFragment {
         }
     }
 }
+*/

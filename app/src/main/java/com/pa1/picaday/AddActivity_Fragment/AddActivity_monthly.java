@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -73,14 +76,19 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                 String loc = location.getText().toString();
                 EditText withWhom = (EditText) view.findViewById(R.id.withwhom);
                 String who = withWhom.getText().toString();
-                //int prior
-                //int participate
-                //int cycle
+                RatingBar priority = (RatingBar)view.findViewById(R.id.priority_bar);
+                Float prior_float = priority.getRating();
+                int prior = Math.round(prior_float);
+                CheckBox participate = (CheckBox)view.findViewById(R.id.participate);
+                Boolean parti_bool = participate.isChecked();
+                int parti = (parti_bool)? 1 : 0;
+                Spinner cycle_monthly = (Spinner)view.findViewById(R.id.cycle_monthly);
+                String cycle = cycle_monthly.getSelectedItem().toString();
                 EditText memo = (EditText) view.findViewById(R.id.memo);
                 String mem = memo.getText().toString();
 
                 Dateinfo newdateinfo = new Dateinfo(s_title, s_time, e_time,
-                        typechecked, loc, who, 2, 0, 0, mem);
+                        typechecked, loc, who, prior, parti, cycle, mem);
                 DBManager manager = new DBManager(getActivity());
                 manager.insertData(newdateinfo);
                 Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();

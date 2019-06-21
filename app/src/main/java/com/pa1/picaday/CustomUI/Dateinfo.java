@@ -11,7 +11,7 @@ public class Dateinfo {
     private String withwhom = "";
     private int priority = 0;
     private int participation = 1;
-    private int cycle = 0;
+    private String cycle = "";
     private String memo = "";
 
     public Dateinfo(String title,
@@ -22,7 +22,7 @@ public class Dateinfo {
                     String withwhom,
                     int priority,
                     int participation,
-                    int cycle,
+                    String cycle,
                     String memo) {
 
         this.title = title;
@@ -31,9 +31,9 @@ public class Dateinfo {
         this.type_checked = type_checked;
         this.location = location;
         this.withwhom = withwhom;
-        //this.priority = priority;
-        //this.participation = participation;
-        //this.cycle = cycle;
+        this.priority = priority;
+        this.participation = participation;
+        this.cycle = cycle;
         this.memo = memo;
     }
 
@@ -54,6 +54,8 @@ public class Dateinfo {
     public String getWithwhom() { return withwhom; }
 
     public int getParticipation() { return participation; }
+
+    public String getCycle() {return cycle;}
 
     public String getMemo() { return memo; }
 }

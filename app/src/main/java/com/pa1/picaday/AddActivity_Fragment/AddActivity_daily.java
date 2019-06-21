@@ -73,7 +73,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
                 //String mem = memo.getText().toString();
 
                 Dateinfo newdateinfo = new Dateinfo(s_title, s_time, e_time,
-                        typechecked, "", "", 2, 0, 0, "");
+                        typechecked, "", "", 2, 0, "", "");
                 DBManager manager = new DBManager(getActivity());
                 manager.insertData(newdateinfo);
                 Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
