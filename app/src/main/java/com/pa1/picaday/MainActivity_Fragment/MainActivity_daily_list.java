@@ -45,6 +45,7 @@ public class MainActivity_daily_list extends Fragment {
         DBManager manager = new DBManager(getActivity());
         today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
 
+        /* 오늘 남은 시간 계산 */
         for (int i=0; i<today_list.size(); i++) {
             String start = today_list.get(i).getStart_time();
             String end = today_list.get(i).getEnd_time();
