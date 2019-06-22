@@ -124,9 +124,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
                 if (listmode) {
                     listmode = false;
+                    item.setIcon(R.drawable.ic_list);
                 }
                 else {
                     listmode = true;
+                    item.setIcon(R.drawable.ic_view);
                 }
                 adapter.setListmode(listmode);
                 viewPager.setAdapter(adapter);
