@@ -1,6 +1,7 @@
 package com.pa1.picaday.CustomUI;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.R;
 
 import java.util.ArrayList;
@@ -49,7 +52,8 @@ public class CustommonthlistAdapter extends BaseAdapter {
         btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AddActivity_monthly addActivity_monthly = AddActivity_monthly.getInstance();
+                addActivity_monthly.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_monthly");
             }
         });
         ImageButton btn_daylist_remove = convertView.findViewById(R.id.btn_daylist_remove);

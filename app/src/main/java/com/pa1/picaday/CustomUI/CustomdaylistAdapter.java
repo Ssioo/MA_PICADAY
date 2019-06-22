@@ -1,6 +1,9 @@
 package com.pa1.picaday.CustomUI;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +60,9 @@ public class CustomdaylistAdapter extends BaseAdapter {
         btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.e("Tagged", "Yes");
+                AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
+                addActivity_daily.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_daily");
             }
         });
         ImageButton btn_daylist_remove = convertView.findViewById(R.id.btn_daylist_remove);
