@@ -1,6 +1,8 @@
 package com.pa1.picaday.CustomUI;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.R;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +40,7 @@ public class CustomdaylistAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
 
@@ -48,8 +51,8 @@ public class CustomdaylistAdapter extends BaseAdapter {
 
         TextView title = convertView.findViewById(R.id.daylist_title);
         TextView description = convertView.findViewById(R.id.daylist_start_end_time);
-        title.setText(dayitemlist.get(position).getTitle());
-        description.setText(dayitemlist.get(position).getStart_time().substring(11,16) + " ~ " + dayitemlist.get(position).getEnd_time().substring(11,16));
+        title.setText(dayitemlist.get(pos).getTitle());
+        description.setText(dayitemlist.get(pos).getStart_time().substring(11,16) + " ~ " + dayitemlist.get(pos).getEnd_time().substring(11,16));
 
 
         ImageButton btn_daylist_edit = convertView.findViewById(R.id.btn_daylist_edit);

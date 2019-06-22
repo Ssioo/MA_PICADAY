@@ -62,15 +62,6 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
                     e_time = simpleDateFormat.format(timeselect_deadline.end_cal.getTime());
                     typechecked = 3;
                 }
-                //EditText location = (EditText) view.findViewById(R.id.location);
-                //String loc = location.getText().toString();
-                //EditText withWhom = (EditText) view.findViewById(R.id.withwhom);
-                //String who = withWhom.getText().toString();
-                //int prior
-                //int participate
-                //int cycle
-                //EditText memo = (EditText) view.findViewById(R.id.memo);
-                //String mem = memo.getText().toString();
 
                 Dateinfo newdateinfo = new Dateinfo(s_title, s_time, e_time,
                         typechecked, "", "", 2, 0, "", "");

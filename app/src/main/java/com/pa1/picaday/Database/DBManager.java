@@ -131,7 +131,7 @@ public class DBManager {
         db.execSQL(sql);
     }
 
-    // 데이터 전체 검색_today, thismonth
+    // 데이터 전체 검색_today, this month
     public ArrayList<Dateinfo> selectAll_today(String date) {
         String selectsql = "SELECT * FROM " + TABLE_NAME
                 + " WHERE " + COLUMN_NAME_START_TIME
@@ -143,7 +143,8 @@ public class DBManager {
         ArrayList<Dateinfo> infos = new ArrayList<>();
         //Log.e("test", results.getString(1));
         while (!results.isAfterLast()) {
-            Dateinfo info = new Dateinfo(results.getString(1),
+            Dateinfo info = new Dateinfo(results.getInt(0),
+                    results.getString(1),
                     results.getString(2),
                     results.getString(3),
                     results.getInt(4),
@@ -159,6 +160,7 @@ public class DBManager {
         results.close();
         return infos;
     }
+
     // 데이터 전체 검색_today, thismonth
     public ArrayList<Dateinfo> selectAll_thisweek(String date_start, String date_end) {
         String selectsql = "SELECT * FROM " + TABLE_NAME
@@ -172,7 +174,8 @@ public class DBManager {
         ArrayList<Dateinfo> infos = new ArrayList<>();
         //Log.e("test", results.getString(1));
         while (!results.isAfterLast()) {
-            Dateinfo info = new Dateinfo(results.getString(1),
+            Dateinfo info = new Dateinfo(results.getInt(0),
+                    results.getString(1),
                     results.getString(2),
                     results.getString(3),
                     results.getInt(4),
