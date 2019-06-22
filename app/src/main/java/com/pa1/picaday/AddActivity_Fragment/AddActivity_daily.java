@@ -31,6 +31,21 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     private Timeselect_Deadline timeselect_deadline = new Timeselect_Deadline();
     private RadioGroup chk_group_daily = null;
 
+    private String s_title;
+    private String s_time;
+    private String e_time;
+    private int typechecked;
+    private EditText schedule_title;
+
+    public void setFromSaved(String s_title, String s_time, String e_time, int typechecked, View view) {
+        this.s_title = s_title;
+        this.s_time = s_time;
+        this.e_time = e_time;
+        this.typechecked = typechecked;
+        schedule_title = view.findViewById(R.id.schedule_title_daily);
+        schedule_title.setText(s_title);
+    }
+
 
     public static AddActivity_daily getInstance() {
         return new AddActivity_daily();
@@ -47,11 +62,11 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 /* v 버튼 클릭 시 db 저장 */
-                EditText schedule_title = (EditText) view.findViewById(R.id.schedule_title_daily);
-                String s_title = schedule_title.getText().toString();
-                String s_time = null;
-                String e_time = null;
-                int typechecked = 2;
+                schedule_title = (EditText) view.findViewById(R.id.schedule_title_daily);
+                s_title = schedule_title.getText().toString();
+                s_time = null;
+                e_time = null;
+                typechecked = 2;
                 if(chk_group_daily.getCheckedRadioButtonId() == R.id.chk_time_daily){
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     s_time = simpleDateFormat.format(timeselect_time.start_cal.getTime());
