@@ -29,7 +29,7 @@ public class MainActivity_weekly_list extends Fragment {
     }
 
     ArrayList<Dateinfo> thisweek_list = new ArrayList<>();
-    long thisweek_left_time = 604800000;
+    long thisweek_left_time = 604800000L;
 
     @Nullable
     @Override
@@ -77,7 +77,7 @@ public class MainActivity_weekly_list extends Fragment {
             lefttime.setTypeface(getActivity().getResources().getFont(R.font.baemin_jua));
             lefttime.setTextColor(getActivity().getResources().getColor(R.color.coral_red));
         }
-        Date thisweek_left = new Date(thisweek_left_time + standcal);
+        Date thisweek_left = new Date(thisweek_left_time);
         SimpleDateFormat tempSDF = new SimpleDateFormat("d:HH:mm", Locale.getDefault());
         lefttime.setText(tempSDF.format(thisweek_left));
 

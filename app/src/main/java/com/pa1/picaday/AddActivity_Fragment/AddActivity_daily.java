@@ -31,19 +31,17 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     private Timeselect_Deadline timeselect_deadline = new Timeselect_Deadline();
     private RadioGroup chk_group_daily = null;
 
-    private String s_title;
+    private String s_title = "";
     private String s_time;
     private String e_time;
     private int typechecked;
     private EditText schedule_title;
 
-    public void setFromSaved(String s_title, String s_time, String e_time, int typechecked, View view) {
-        this.s_title = s_title;
-        this.s_time = s_time;
-        this.e_time = e_time;
-        this.typechecked = typechecked;
-        schedule_title = view.findViewById(R.id.schedule_title_daily);
-        schedule_title.setText(s_title);
+    public void setFromSaved(Dateinfo info) {
+        this.s_title = info.getTitle();
+        this.s_time = info.getStart_time();
+        this.e_time = info.getEnd_time();
+        this.typechecked = info.getType_checked();
     }
 
 
@@ -55,6 +53,11 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_daily, container, false);
+
+        if (s_title != "") {
+            schedule_title = view.findViewById(R.id.schedule_title_daily);
+            schedule_title.setText(s_title);
+        }
 
         /* V 버튼 눌렀을 때 */
         ImageButton btn_check = (ImageButton) view.findViewById(R.id.btn_check_day);

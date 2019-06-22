@@ -68,8 +68,8 @@ public class CustomdaylistAdapter extends BaseAdapter {
         btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Tagged", "Yes");
                 AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
+                addActivity_daily.setFromSaved(dayitemlist.get(pos));
                 addActivity_daily.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_daily");
             }
         });
