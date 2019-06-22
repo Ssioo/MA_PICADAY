@@ -110,18 +110,20 @@ public class DBManager {
     }
 
     // 데이터 갱신
-    public void updateData(Dateinfo info, int index) {
-        String setsql = String.format("UPDATE %s SET %s = %s, %s = %s, %s = %s, %s = %s, %s = %s, %s = %s, %s = %s, %s = %s, %s = %s, %s = %s",
-                TABLE_NAME,
-                COLUMN_NAME_TITLE, info.getTitle(),
-                COLUMN_NAME_START_TIME, info.getStart_time(),
-                COLUMN_NAME_END_TIME, info.getEnd_time(),
-                COLUMN_NAME_CHECKBOX_FIRST, info.getType_checked(),
-                COLUMN_NAME_LOCATION, info.getLocation(),
-                COLUMN_NAME_WHO, info.getWithwhom(),
-                COLUMN_NAME_PRIORITY, info.getPriority(),
-                COLUMN_NAME_CYCLE, 0,
-                COLUMN_NAME_MEMO, info.getMemo());
+    public void updateData(Dateinfo info, Dateinfo newinfo) {
+        String setsql = "UPDATE " + TABLE_NAME + " SET "
+                + COLUMN_NAME_TITLE + " = '" + newinfo.getTitle() + "', "
+                + COLUMN_NAME_START_TIME + " = '" + newinfo.getStart_time() + "', "
+                + COLUMN_NAME_END_TIME + " = '" + newinfo.getEnd_time() + "', "
+                + COLUMN_NAME_CHECKBOX_FIRST + " = " + newinfo.getType_checked() + ", "
+                + COLUMN_NAME_LOCATION + " = '" + newinfo.getLocation() + "', "
+                + COLUMN_NAME_WHO + " = '" + newinfo.getWithwhom() + "', "
+                + COLUMN_NAME_PRIORITY + " = " + newinfo.getPriority() + ", "
+                + COLUMN_NAME_CYCLE + " = 0, "
+                + COLUMN_NAME_MEMO + " = '" + newinfo.getMemo() + "' " +
+                "WHERE " + COLUMN_NAME_TITLE + " = '" + info.getTitle() + "', "
+                + COLUMN_NAME_START_TIME + " = '" + info.getStart_time() + "', "
+                + COLUMN_NAME_END_TIME + " = '" + info.getEnd_time() + "';";
         db.execSQL(setsql);
     }
 
