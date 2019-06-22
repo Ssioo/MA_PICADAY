@@ -10,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.CustomUI.CustommonthlistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
@@ -74,10 +76,22 @@ public class MainActivity_monthly_list extends Fragment {
         thread.start();
 
         /* 오늘 일정 리스트뷰 작성 */
-        ListView thismonthlist = view.findViewById(R.id.monthlist);
+        final ListView thismonthlist = view.findViewById(R.id.monthlist);
         CustommonthlistAdapter custommonthlistAdapter = new CustommonthlistAdapter();
         custommonthlistAdapter.addList(thismonth_list);
         thismonthlist.setAdapter(custommonthlistAdapter);
+        final boolean[] check = {false};
+        thismonthlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position > -1 && position < thismonthlist.getCount()) {
+                    Dateinfo dateinfo = thismonth_list.get(position);
+                    AddActivity_monthly addActivity_monthly = AddActivity_monthly.getInstance();
+                    addActivity_monthly.setFromSaved(dateinfo);
+                    addActivity_monthly.show(getActivity().getSupportFragmentManager(), "add_monthly");
+                }
+            }
+        });
 
         /* Text style 세팅 */
         SharedPreferences sd = getActivity().getSharedPreferences("style_settings", 0);

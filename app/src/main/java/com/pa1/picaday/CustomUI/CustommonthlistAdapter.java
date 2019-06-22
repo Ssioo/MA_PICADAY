@@ -70,14 +70,7 @@ public class CustommonthlistAdapter extends BaseAdapter {
                 + monthitemlist.get(position).getEnd_time().substring(10,16));
 
 
-        ImageButton btn_daylist_edit = convertView.findViewById(R.id.btn_daylist_edit);
-        btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddActivity_monthly addActivity_monthly = AddActivity_monthly.getInstance();
-                addActivity_monthly.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_monthly");
-            }
-        });
+
         ImageButton btn_daylist_remove = convertView.findViewById(R.id.btn_daylist_remove);
         btn_daylist_remove.setOnClickListener(new View.OnClickListener() {
             @Override

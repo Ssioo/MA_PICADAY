@@ -10,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
 import com.pa1.picaday.CustomUI.CustomweeklistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
@@ -93,10 +95,26 @@ public class MainActivity_weekly_list extends Fragment {
         thread.start();
 
         /* 오늘 일정 리스트뷰 작성 */
-        ListView thisweeklist = view.findViewById(R.id.weeklist);
+        final ListView thisweeklist = view.findViewById(R.id.weeklist);
         CustomweeklistAdapter customweeklistAdapter = new CustomweeklistAdapter();
         customweeklistAdapter.addList(thisweek_list);
         thisweeklist.setAdapter(customweeklistAdapter);
+        final boolean[] check = {false};
+        thisweeklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position > -1 && position < thisweeklist.getCount()) {
+                    Dateinfo dateinfo = thisweek_list.get(position);
+                    AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
+                    addActivity_weekly.setFromSaved(dateinfo);
+                    addActivity_weekly.show(getActivity().getSupportFragmentManager(), "add_weekly");
+                }
+            }
+        });
+        if(check[0] == true){
+            customweeklistAdapter.notifyDataSetChanged();
+            check[0] = false;
+        }
 
         /* Text style 세팅 */
         SharedPreferences sd = getActivity().getSharedPreferences("style_settings", 0);

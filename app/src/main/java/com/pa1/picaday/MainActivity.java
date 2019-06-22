@@ -2,6 +2,8 @@ package com.pa1.picaday;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -141,14 +143,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case 0:
                         AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
                         addActivity_weekly.show(getSupportFragmentManager(), "add_weekly");
+
                         break;
                     case 1:
                         AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
                         addActivity_daily.show(getSupportFragmentManager(),"add_daily");
+
                         break;
                     case 2:
                         AddActivity_monthly addActivity_monthly = AddActivity_monthly.getInstance();
                         addActivity_monthly.show(getSupportFragmentManager(), "add_monthly");
+
                         break;
                     default:
                         break;

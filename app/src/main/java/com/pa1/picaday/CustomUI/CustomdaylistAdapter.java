@@ -75,15 +75,7 @@ public class CustomdaylistAdapter extends BaseAdapter {
         description.setText(dayitemlist.get(pos).getStart_time().substring(11,16) + " ~ " + dayitemlist.get(pos).getEnd_time().substring(11,16));
 
 
-        ImageButton btn_daylist_edit = convertView.findViewById(R.id.btn_daylist_edit);
-        btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
-                addActivity_daily.setFromSaved(dayitemlist.get(pos));
-                addActivity_daily.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_daily");
-            }
-        });
+
         ImageButton btn_daylist_remove = convertView.findViewById(R.id.btn_daylist_remove);
         btn_daylist_remove.setOnClickListener(new View.OnClickListener() {
             @Override
