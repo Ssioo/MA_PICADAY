@@ -110,7 +110,7 @@ public class DBManager {
     }
 
     // 데이터 갱신
-    public void updateData(Dateinfo info, Dateinfo newinfo) {
+    public void updateData(int id, Dateinfo newinfo) {
         String setsql = "UPDATE " + TABLE_NAME + " SET "
                 + COLUMN_NAME_TITLE + " = '" + newinfo.getTitle() + "', "
                 + COLUMN_NAME_START_TIME + " = '" + newinfo.getStart_time() + "', "
@@ -121,9 +121,7 @@ public class DBManager {
                 + COLUMN_NAME_PRIORITY + " = " + newinfo.getPriority() + ", "
                 + COLUMN_NAME_CYCLE + " = 0, "
                 + COLUMN_NAME_MEMO + " = '" + newinfo.getMemo() + "' " +
-                "WHERE " + COLUMN_NAME_TITLE + " = '" + info.getTitle() + "', "
-                + COLUMN_NAME_START_TIME + " = '" + info.getStart_time() + "', "
-                + COLUMN_NAME_END_TIME + " = '" + info.getEnd_time() + "';";
+                "WHERE " + COLUMN_NAME_ID + " = '" + id + "';";
         db.execSQL(setsql);
     }
 

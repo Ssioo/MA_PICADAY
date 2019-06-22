@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.CustomUI.CustomdaylistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
@@ -58,10 +61,28 @@ public class MainActivity_daily_list extends Fragment {
 
 
        /* 오늘 일정 리스트뷰 작성 */
-        ListView todaylist = view.findViewById(R.id.daylist);
+        final ListView todaylist = view.findViewById(R.id.daylist);
         CustomdaylistAdapter customdaylistAdapter = new CustomdaylistAdapter();
         customdaylistAdapter.addList(today_list);
         todaylist.setAdapter(customdaylistAdapter);
+        final boolean[] check = {false};
+        todaylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("click", "button");
+                if(position > -1 && position < todaylist.getCount()){
+                    Dateinfo dateinfo = today_list.get(position);
+                    AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
+                    addActivity_daily.setFromSaved(dateinfo);
+                    addActivity_daily.show(getActivity().getSupportFragmentManager(),"add_daily");
+                    check[0] = true;
+                }
+            }
+        });
+        if(check[0] == true){
+            customdaylistAdapter.notifyDataSetChanged();
+            check[0] = false;
+        }
 
 
         /* Text style 세팅 */

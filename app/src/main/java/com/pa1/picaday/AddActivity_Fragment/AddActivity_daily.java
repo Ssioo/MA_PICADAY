@@ -32,6 +32,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     private Timeselect_Deadline timeselect_deadline = new Timeselect_Deadline();
     private RadioGroup chk_group_daily = null;
 
+    private int id = 0;
     private String s_title = "";
     private String s_time;
     private String e_time;
@@ -39,6 +40,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     private EditText schedule_title;
 
     public void setFromSaved(Dateinfo info) {
+        this.id = info.getId();
         this.s_title = info.getTitle();
         this.s_time = info.getStart_time();
         this.e_time = info.getEnd_time();
@@ -101,10 +103,13 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
                 Dateinfo newdateinfo = new Dateinfo(s_title, s_time, e_time,
                         typechecked, "", "", 2, 0, "", "");
                 DBManager manager = new DBManager(getActivity());
-                manager.insertData(newdateinfo);
-                Toast.makeText(getActivity(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
-
-
+                if(id == 0){
+                    manager.insertData(newdateinfo);
+                    Toast.makeText(getActivity(), "새로운 일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
+                }else{
+                    manager.updateData(id, newdateinfo);
+                    Toast.makeText(getActivity(), "일정이 갱신 되었습니다", Toast.LENGTH_SHORT).show();
+                }
                 dismiss();
             }
         });
