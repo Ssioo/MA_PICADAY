@@ -126,8 +126,11 @@ public class DBManager {
     }
 
     // 데이터 삭제
-    public void removeData(int index) {
-        String sql = "delete from " + TABLE_NAME + " where id = " + index + ";";
+    public void removeData(Dateinfo info) {
+        String sql = "delete from " + TABLE_NAME + " where "
+                + COLUMN_NAME_TITLE + " = '" + info.getTitle() + "' AND "
+                + COLUMN_NAME_START_TIME + " = '" + info.getStart_time() + "' AND "
+                + COLUMN_NAME_END_TIME + " = '" + info.getEnd_time() + "';";
         db.execSQL(sql);
     }
 

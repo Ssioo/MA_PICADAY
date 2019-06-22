@@ -1,6 +1,8 @@
 package com.pa1.picaday.CustomUI;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
+import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.R;
 
 import java.util.ArrayList;
@@ -60,7 +64,26 @@ public class CustommonthlistAdapter extends BaseAdapter {
         btn_daylist_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle(monthitemlist.get(pos).getTitle())
+                        .setMessage("정말 이 일정을 지우시겠습니까?")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DBManager dbManager = new DBManager(context.getApplicationContext());
+                                dbManager.removeData(monthitemlist.get(pos));
+                                Toast.makeText(context, "일정을 삭제했습니다. 새로고침을 해주세요.", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setCancelable(false)
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.create().show();
             }
         });
         return convertView;
