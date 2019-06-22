@@ -48,7 +48,15 @@
         android:id="@+id/weeklist"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:divider="@drawable/background_transparent"
+        android:dividerHeight="8dp"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="5dp"
         app:layout_constraintBottom_toTopOf="@+id/icanuse_day_thisweek_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/today_thisweek_list" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,7 @@
 package com.pa1.picaday.CustomUI;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,6 +24,8 @@ import java.util.ArrayList;
 
 public class CustommonthlistAdapter extends BaseAdapter {
     private ArrayList<Dateinfo> monthitemlist = new ArrayList<>();
+    private boolean animationsLocked = false;
+    private boolean delayEnterAnimation = true;
     public CustommonthlistAdapter() {
     }
 
@@ -41,6 +46,20 @@ public class CustommonthlistAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_daylistview, parent, false);
+        }
+        if (!animationsLocked) {
+            convertView.setTranslationY(100);
+            convertView.setAlpha(0.f);
+            convertView.animate().translationY(0).alpha(1.f).setStartDelay(delayEnterAnimation ? 20 * (position) : 0)
+                    .setInterpolator(new DecelerateInterpolator(2.f))
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            animationsLocked =  true;
+                        }
+                    })
+                    .start();
         }
 
         TextView title = convertView.findViewById(R.id.daylist_title);

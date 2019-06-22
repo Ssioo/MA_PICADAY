@@ -1,5 +1,7 @@
 package com.pa1.picaday.CustomUI;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +32,8 @@ import java.util.Locale;
 public class CustomdaylistAdapter extends BaseAdapter {
 
     private ArrayList<Dateinfo> dayitemlist = new ArrayList<>();
+    private boolean delayEnterAnimation = true;
+    private boolean animationsLocked = false;
 
     public CustomdaylistAdapter() {
     }
@@ -56,6 +61,20 @@ public class CustomdaylistAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_daylistview, parent, false);
+        }
+        if (!animationsLocked) {
+            convertView.setTranslationY(100);
+            convertView.setAlpha(0.f);
+            convertView.animate().translationY(0).alpha(1.f).setStartDelay(delayEnterAnimation ? 20 * (position) : 0)
+                    .setInterpolator(new DecelerateInterpolator(2.f))
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            animationsLocked =  true;
+                        }
+                    })
+                    .start();
         }
 
         TextView title = convertView.findViewById(R.id.daylist_title);
