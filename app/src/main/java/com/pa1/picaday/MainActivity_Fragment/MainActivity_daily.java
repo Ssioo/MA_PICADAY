@@ -3,10 +3,11 @@ package com.pa1.picaday.MainActivity_Fragment;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,9 @@ import android.widget.TextView;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.CustomUI.DayCircleChart;
 import com.pa1.picaday.CustomUI.DayCirclePin;
+import com.pa1.picaday.CustomUI.WritingVO;
 import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.R;
-import com.pa1.picaday.CustomUI.WritingVO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,15 +36,30 @@ public class MainActivity_daily extends Fragment {
         // Required empty public constructor
     }
 
+
+
+
     ArrayList<WritingVO> writing = new ArrayList<>();
     ArrayList<Dateinfo> today_list = new ArrayList<>();
     ArrayList<Pair<Date, Date>> datacal = new ArrayList<>();
-    long today_left_time = 86400000;
+    private TextView lefttime;
+    Handler handler;
+    long today_left_time;
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    SimpleDateFormat tempSDF = new SimpleDateFormat("H시간 m분 s초", Locale.getDefault());
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.activity_main_daily, container, false);
+
 
 
         /* DB에 저장된 오늘 일정들을 표시,
@@ -55,9 +71,8 @@ public class MainActivity_daily extends Fragment {
 
         Calendar standardCal = Calendar.getInstance();
         standardCal.set(standardCal.get(Calendar.YEAR),standardCal.get(Calendar.MONTH),standardCal.get(Calendar.DAY_OF_MONTH), 0,0,0);
-        long standcal = standardCal.getTime().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        final long standcal = standardCal.getTime().getTime();
+
 
 
         DBManager manager = new DBManager(getActivity());
@@ -71,23 +86,39 @@ public class MainActivity_daily extends Fragment {
             }
         }
 
-        for(int i=0; i<datacal.size(); i++) {
-            writing.add(new WritingVO((datacal.get(i).first.getTime() - standcal)/1000, (datacal.get(i).second.getTime() - standcal)/1000, today_list.get(i).getTitle()));
-            today_left_time = today_left_time - (datacal.get(i).second.getTime() - datacal.get(i).first.getTime());
-        }
-
         FrameLayout daychart = view.findViewById(R.id.daychart);
         DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 100, 1000);
         DayCirclePin dayCirclePin = new DayCirclePin(getActivity(), 100, 1000);
         daychart.addView(dayCircleChart);
         daychart.addView(dayCirclePin);
 
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                get_lefttime(standcal);
+            }
+        };
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    handler.sendEmptyMessage(0);
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
 
         /* Text style 세팅 */
         SharedPreferences sd = getActivity().getSharedPreferences("style_settings", 0);
 
-        TextView lefttime = view.findViewById(R.id.time_left_today);
+        lefttime = view.findViewById(R.id.time_left_today);
         if (sd.getBoolean("style_timer1", false)) {
             lefttime.setTypeface(getActivity().getResources().getFont(R.font.american_captain));
             lefttime.setTextColor(getActivity().getResources().getColor(R.color.warm_blue));
@@ -96,12 +127,41 @@ public class MainActivity_daily extends Fragment {
             lefttime.setTypeface(getActivity().getResources().getFont(R.font.baemin_jua));
             lefttime.setTextColor(getActivity().getResources().getColor(R.color.coral_red));
         }
-        Date today_left = new Date(today_left_time + standcal);
-        SimpleDateFormat tempSDF = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        lefttime.setText(tempSDF.format(today_left));
+
 
         return view;
     }
 
 
+
+    private void get_lefttime(long standcal) {
+        Calendar nowcal = Calendar.getInstance();
+        Calendar tommorowcal = Calendar.getInstance();
+        tommorowcal.add(Calendar.DAY_OF_MONTH, 1);
+        tommorowcal.set(Calendar.HOUR_OF_DAY, 0);
+        tommorowcal.set(Calendar.MINUTE, 0);
+        tommorowcal.set(Calendar.SECOND, 0);
+        today_left_time = tommorowcal.getTime().getTime() - nowcal.getTime().getTime();
+        for(int i=0; i<datacal.size(); i++) {
+            long nowcallong = nowcal.getTime().getTime();
+            long datacal_sp = datacal.get(i).first.getTime();
+            long datacal_ep = datacal.get(i).second.getTime();
+            writing.add(new WritingVO((datacal_sp - standcal)/1000, (datacal_ep - standcal)/1000, today_list.get(i).getTitle()));
+
+            if (nowcallong > datacal_ep) {
+                continue; // endtime보다 지났을 때 : 안 빼기
+            }
+            else if (nowcallong <= datacal_ep && nowcallong > datacal_sp) {
+                today_left_time = today_left_time - (datacal_ep - nowcal.getTime().getTime());
+                // 현재 starttime이랑 endtime 사이에 있을 때
+            }
+            else {
+                // starttime 전일 때 : 다 빼기
+                today_left_time = today_left_time - (datacal_ep - datacal_sp);
+            }
+
+        }
+        Date today_left = new Date(today_left_time + tommorowcal.getTime().getTime());
+        lefttime.setText(tempSDF.format(today_left));
+    }
 }
