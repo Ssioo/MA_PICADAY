@@ -25,6 +25,9 @@ import java.util.Locale;
 public class Timeselect_Time extends Fragment {
     public Calendar start_cal = Calendar.getInstance();
     public Calendar end_cal = Calendar.getInstance();
+    private TextView text_dp_start;
+    private TextView text_tp_start;
+
 
     public Timeselect_Time() {
     }
@@ -42,11 +45,11 @@ public class Timeselect_Time extends Fragment {
         final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy년 MMM dd일 (E)", Locale.getDefault());
         final SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
-        final TextView text_dp_start = (TextView) view.findViewById(R.id.startdate_time);
+        text_dp_start = (TextView) view.findViewById(R.id.startdate_time);
         if (text_dp_start.getText() == "") {
             text_dp_start.setText(sdf1.format(today));
         }
-        final TextView text_tp_start = (TextView) view.findViewById(R.id.starttime_time);
+        text_tp_start = (TextView) view.findViewById(R.id.starttime_time);
         if (text_tp_start.getText() == "") {
             text_tp_start.setText(sdf2.format(today));
         }

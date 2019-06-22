@@ -20,6 +20,7 @@ import com.pa1.picaday.R;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Time;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -54,9 +55,26 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_daily, container, false);
 
+        chk_group_daily = (RadioGroup) view.findViewById(R.id.chk_group_daily);
+        schedule_title = view.findViewById(R.id.schedule_title_daily);
+        /* Edit 경우인 것을 판별 */
         if (s_title != "") {
-            schedule_title = view.findViewById(R.id.schedule_title_daily);
             schedule_title.setText(s_title);
+
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                if (typechecked == 2) {
+                    chk_group_daily.check(R.id.chk_time_daily);
+                    timeselect_time.start_cal.setTime(sdf.parse(s_time));
+                    timeselect_time.end_cal.setTime(sdf.parse(e_time));
+                }
+                else if (typechecked == 3) {
+                    chk_group_daily.check(R.id.chk_deadline_daily);
+                    timeselect_deadline.end_cal.setTime(sdf.parse(e_time));
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         /* V 버튼 눌렀을 때 */
@@ -65,7 +83,6 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 /* v 버튼 클릭 시 db 저장 */
-                schedule_title = (EditText) view.findViewById(R.id.schedule_title_daily);
                 s_title = schedule_title.getText().toString();
                 s_time = null;
                 e_time = null;
@@ -106,7 +123,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.timeselect_picker_daily, timeselect_time).commit();
 
-        chk_group_daily = (RadioGroup) view.findViewById(R.id.chk_group_daily);
+
         chk_group_daily.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

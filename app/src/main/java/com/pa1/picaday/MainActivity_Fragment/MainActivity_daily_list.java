@@ -63,6 +63,7 @@ public class MainActivity_daily_list extends Fragment {
         customdaylistAdapter.addList(today_list);
         todaylist.setAdapter(customdaylistAdapter);
 
+
         /* Text style 세팅 */
         SharedPreferences sd = getActivity().getSharedPreferences("style_settings", 0);
 
