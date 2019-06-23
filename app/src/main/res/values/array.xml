@@ -8,4 +8,15 @@
         <item>@color/light_brown</item>
         <item>@color/purple</item>
     </array>
+
+    <array name="startpage_set">
+        <item>DAY</item>
+        <item>WEEK</item>
+        <item>MONTH</item>
+    </array>
+
+    <array name="timerstyle_set">
+        <item>스타일1</item>
+        <item>스타일2</item>
+    </array>
 </resources>

@@ -2,9 +2,9 @@ package com.pa1.picaday;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseUser currentUser;
     private TextView user_email;
     private TextView btn_sign;
-    private boolean listmode = false;
+    private boolean listmode;
 
 
     @Override
@@ -67,7 +67,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /* 뷰페이저 구성 (DAILY, MONTHLY, WEEKLY 프래그먼트) */
         viewPager = findViewById(R.id.pager);
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); // TabPagerAdapter 호출로 뷰페이저 3개짜리 구성
-        adapter.setListmode(false);
+        SharedPreferences sdfw = PreferenceManager.getDefaultSharedPreferences(this);
+        listmode = sdfw.getBoolean("listmode", false);
+        adapter.setListmode(listmode);
         viewPager.setAdapter(adapter);
 
         /* 뷰페이저 초기화 */
@@ -182,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             /* Setting page */
             case R.id.navigation_item_setting:
-                Intent intent = new Intent(getApplicationContext(), Settingpage.class);
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                 Toast.makeText(getApplicationContext(), "SETTING PAGE", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 break;
@@ -204,17 +206,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void Init_from_setting() {
         /* 초기 뷰페이저 SharedPreference정보에 의해 구성 */
-        SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
+        //SharedPreferences style_settings = getSharedPreferences("style_settings", MODE_PRIVATE);
 
-        if (style_settings.getBoolean("style_first_show_day", false)) {
+        SharedPreferences sdf = PreferenceManager.getDefaultSharedPreferences(this);
+        String str = sdf.getString("startpage","");
+
+        if (str.equals("DAY")) {
             viewPager.setCurrentItem(1);
             tabLayout.getTabAt(1).select();
         }
-        else if (style_settings.getBoolean("style_first_show_week", false)) {
+        else if (str.equals("WEEK")) {
             viewPager.setCurrentItem(0);
             tabLayout.getTabAt(0).select();
         }
-        else if (style_settings.getBoolean("style_first_show_month", false)) {
+        else if (str.equals("MONTH")) {
             viewPager.setCurrentItem(2);
             tabLayout.getTabAt(2).select();
         }
