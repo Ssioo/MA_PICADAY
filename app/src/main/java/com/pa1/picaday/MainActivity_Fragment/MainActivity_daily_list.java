@@ -69,7 +69,6 @@ public class MainActivity_daily_list extends Fragment {
         todaylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("click", "button");
                 if(position > -1 && position < todaylist.getCount()){
                     Dateinfo dateinfo = today_list.get(position);
                     AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
@@ -80,6 +79,7 @@ public class MainActivity_daily_list extends Fragment {
             }
         });
         if(check[0] == true){
+            Log.e("click", "button");
             customdaylistAdapter.notifyDataSetChanged();
             check[0] = false;
         }
