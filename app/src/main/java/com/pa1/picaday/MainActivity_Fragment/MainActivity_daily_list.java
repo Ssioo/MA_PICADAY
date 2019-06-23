@@ -1,5 +1,7 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,10 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.CustomUI.CustomdaylistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
@@ -31,6 +33,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity_daily_list extends Fragment {
+
     public MainActivity_daily_list() {
     }
 
@@ -66,6 +69,7 @@ public class MainActivity_daily_list extends Fragment {
                 if(position > -1 && position < todaylist.getCount()){
                     Dateinfo dateinfo = today_list.get(position);
                     Intent intent = new Intent(getActivity(), EditActivity.class);
+                    intent.putExtra(EditActivity.EDIT_INTENT_KEY, dateinfo);
                     startActivity(intent);
                     check[0] = true;
                 }
@@ -151,3 +155,5 @@ public class MainActivity_daily_list extends Fragment {
         lefttime.setText(tempSDF.format(today_left));
     }
 }
+
+

@@ -1,7 +1,9 @@
 package com.pa1.picaday.CustomUI;
 
 
-public class Dateinfo {
+import java.io.Serializable;
+
+public class Dateinfo implements Serializable {
     private int id = 0;
     private String title = "";
     private String Start_time = null;
