@@ -88,7 +88,7 @@ public class CustomdaylistAdapter extends BaseAdapter {
                             public void onClick(DialogInterface dialog, int which) {
                                 DBManager dbManager = new DBManager(context.getApplicationContext());
                                 dbManager.removeData(dayitemlist.get(pos));
-                                Toast.makeText(context, "일정을 삭제했습니다. 새로고침을 해주세요.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "일정을 삭제했습니다.", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
                         })

@@ -34,6 +34,11 @@ import java.util.Locale;
 
 public class MainActivity_daily_list extends Fragment {
 
+    private CustomdaylistAdapter customdaylistAdapter;
+    private ListView todaylist;
+    private DBManager manager;
+    Calendar standardCal;
+
     public MainActivity_daily_list() {
     }
 
@@ -50,19 +55,18 @@ public class MainActivity_daily_list extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_main_daily_list, container, false);
 
-        Calendar standardCal = Calendar.getInstance();
+        standardCal = Calendar.getInstance();
         standardCal.set(standardCal.get(Calendar.YEAR),standardCal.get(Calendar.MONTH),standardCal.get(Calendar.DAY_OF_MONTH), 0,0,0);
 
-        DBManager manager = new DBManager(getActivity());
+        manager = new DBManager(getActivity());
         today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
 
 
        /* 오늘 일정 리스트뷰 작성 */
-        final ListView todaylist = view.findViewById(R.id.daylist);
-        CustomdaylistAdapter customdaylistAdapter = new CustomdaylistAdapter();
+        todaylist = view.findViewById(R.id.daylist);
+        customdaylistAdapter = new CustomdaylistAdapter();
         customdaylistAdapter.addList(today_list);
         todaylist.setAdapter(customdaylistAdapter);
-        final boolean[] check = {false};
         todaylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -71,15 +75,10 @@ public class MainActivity_daily_list extends Fragment {
                     Intent intent = new Intent(getActivity(), EditActivity.class);
                     intent.putExtra(EditActivity.EDIT_INTENT_KEY, dateinfo);
                     startActivity(intent);
-                    check[0] = true;
                 }
             }
         });
-        if(check[0] == true){
-            Log.e("click", "button");
-            customdaylistAdapter.notifyDataSetChanged();
-            check[0] = false;
-        }
+
 
         /* 오늘 남은 시간 계산 */
         handler = new Handler() {
