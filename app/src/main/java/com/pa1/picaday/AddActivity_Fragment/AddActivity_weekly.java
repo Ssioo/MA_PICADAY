@@ -60,7 +60,7 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         /* Edit 경우인 것을 판별 */
-        if (EDIT_MODE) { //TOD : EDIT_MODE로 받기
+        if (EDIT_MODE) {
             schedule_title.setText(s_title);
 
             try {
@@ -69,16 +69,20 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
                     chk_group_weekly.check(R.id.chk_time_weekly);
                     timeselect_time.start_cal.setTime(sdf.parse(s_time));
                     timeselect_time.end_cal.setTime(sdf.parse(e_time));
-                    fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit();
                     timeselect_time.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit();
                 }
                 else if (typechecked == 3) { // deadline 형태
                     chk_group_weekly.check(R.id.chk_deadline_weekly);
                     timeselect_deadline.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_deadline.setMODE_EDIT(true);
                     fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_deadline).commit();
                 }
                 else if (typechecked == 1) { // day 형태
                     chk_group_weekly.check(R.id.chk_day_weekly);
+                    timeselect_day.start_cal.setTime(sdf.parse(s_time));
+                    timeselect_day.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_day.setMODE_EDIT(true);
                     fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_day).commit();
                 }
             } catch (ParseException e) {
@@ -86,11 +90,10 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
             }
         }
         else {
-            fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit(); // 초기 : TOD - typechecked불러오는 형식으로 변경
+            fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit();
         }
 
         /* 시간, 하루종일, 데드라인 형태 변환 체크 */
-
         chk_group_weekly.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

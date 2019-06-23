@@ -25,11 +25,12 @@ import java.util.Locale;
 public class Timeselect_Time extends Fragment {
     public Calendar start_cal = Calendar.getInstance();
     public Calendar end_cal = Calendar.getInstance();
+
     private TextView text_dp_start;
     private TextView text_tp_start;
     private TextView text_dp_end;
     private TextView text_tp_end;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MMM dd일 (E) HH:mm", Locale.getDefault());
+
     private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy년 MMM dd일 (E)", Locale.getDefault());
     private SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
@@ -39,8 +40,7 @@ public class Timeselect_Time extends Fragment {
         this.MODE_EDIT = MODE_EDIT;
     }
 
-    public Timeselect_Time() {
-    }
+    public Timeselect_Time() { }
 
     @Nullable
     @Override

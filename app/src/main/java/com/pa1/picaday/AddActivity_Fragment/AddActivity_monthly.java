@@ -51,6 +51,7 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
     private RatingBar priority;
     private CheckBox participate;
     private EditText memo;
+    private boolean EDIT_MODE = false;
 
     public void setFromSaved(Dateinfo info) {
         this.id = info.getId();
@@ -62,6 +63,7 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         this.who = info.getWithwhom();
         this.mem = info.getMemo();
         this.prior_float = (float) info.getPriority();
+        EDIT_MODE = true;
     }
 
     public AddActivity_monthly() { }
@@ -79,9 +81,10 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
         priority = (RatingBar)view.findViewById(R.id.priority_bar);
         participate = (CheckBox)view.findViewById(R.id.participate);
         memo = (EditText) view.findViewById(R.id.memo);
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
 
         /* Edit 경우인 것을 판별 */
-        if (s_title != "") {
+        if (EDIT_MODE) {
             schedule_title.setText(s_title);
 
             try {
@@ -90,15 +93,21 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                     chk_group.check(R.id.chk_time_monthly);
                     timeselect_time.start_cal.setTime(sdf.parse(s_time));
                     timeselect_time.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_time.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
                 }
                 else if (typechecked == 3) {
                     chk_group.check(R.id.chk_deadline_monthly);
                     timeselect_deadline.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_deadline.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_deadline).commit();
                 }
                 else if (typechecked == 1) {
                     chk_group.check(R.id.chk_day_monthly);
                     timeselect_day.start_cal.setTime(sdf.parse(s_time));
                     timeselect_day.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_day.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_day).commit();
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -109,6 +118,36 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
             memo.setText(mem);
             priority.setRating(prior_float);
         }
+        else {
+            fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
+        }
+        /* 시간, 하루종일, 데드라인 형태 변환 체크 */
+
+        chk_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                if (checkedId == R.id.chk_day_monthly) {
+                    /* 시간 & 종료 시간 설정 Fragment 호출 */
+                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_day);
+                }
+                else if (checkedId == R.id.chk_time_monthly) {
+                    /* 시간 & 종료 시간 설정 Fragment 호출 */
+                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_time);
+                }
+                else if (checkedId == R.id.chk_deadline_monthly) {
+                    /* 시간 & 종료 시간 설정 Fragment 호출 */
+                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_deadline);
+                }
+                fragmentTransaction.commit();
+            }
+        });
+
+        /* 반복 사이클 결정 */
+        Spinner cycle_monthly = (Spinner) view.findViewById(R.id.cycle_monthly);
+        String[] items = new String[]{"없음", "매일", "매주", "격주", "매달"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
+        cycle_monthly.setAdapter(adapter);
 
         /* V 버튼 눌렀을 때 */
         ImageButton btn_check = (ImageButton) view.findViewById(R.id.btn_check_month);
@@ -169,43 +208,6 @@ public class AddActivity_monthly extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
-
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
-
-        /* 시간, 하루종일, 데드라인 형태 변환 체크 */
-
-        chk_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-                if (checkedId == R.id.chk_day_monthly) {
-                    /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_day);
-                }
-                else if (checkedId == R.id.chk_time_monthly) {
-                    /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_time);
-                }
-                else if (checkedId == R.id.chk_deadline_monthly) {
-                    /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_monthly, timeselect_deadline);
-                }
-                fragmentTransaction.commit();
-            }
-        });
-
-        /* 반복 사이클 결정 */
-        Spinner cycle_monthly = (Spinner) view.findViewById(R.id.cycle_monthly);
-        String[] items = new String[]{"없음", "매일", "매주", "격주", "매달"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, items);
-        cycle_monthly.setAdapter(adapter);
-
-
-        /*select query*/
-
-
-
 
         return view;
     }

@@ -24,31 +24,46 @@ import java.util.Locale;
 public class Timeselect_Deadline extends Fragment {
     public Calendar end_cal;
 
-    public Timeselect_Deadline() {
-    }
+    private TextView text_dp_end;
+    private TextView text_tp_end;
+
+    //final SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MMM dd일 (E) HH:mm", Locale.getDefault());
+    private SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy년 MMM dd일 (E)", Locale.getDefault());
+    private SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+    private boolean MODE_EDIT = false;
+
+    public void setMODE_EDIT(boolean MODE_EDIT) { this.MODE_EDIT = MODE_EDIT; }
+
+    public Timeselect_Deadline() { }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.timeselect_deadline, container, false);
 
-        /* TImePicker 구동 */
-        final Calendar today_calendar = Calendar.getInstance();
-        final Date today = today_calendar.getTime();
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MMM dd일 (E) HH:mm", Locale.getDefault());
-        final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy년 MMM dd일 (E)", Locale.getDefault());
-        final SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm", Locale.getDefault());
-
-        final TextView text_dp_end = (TextView) view.findViewById(R.id.enddate_deadline);
-        if (text_dp_end.getText() == "") {
-            text_dp_end.setText(sdf1.format(today));
-        }
-        final TextView text_tp_end = (TextView) view.findViewById(R.id.endtime_deadline);
-        if (text_tp_end.getText() == "") {
-            text_tp_end.setText(sdf2.format(today));
-        }
+        text_dp_end = (TextView) view.findViewById(R.id.enddate_deadline);
+        text_tp_end = (TextView) view.findViewById(R.id.endtime_deadline);
 
         end_cal = Calendar.getInstance();
+
+        /* TImePicker 초기 시간 표시하기 */
+        /* Edit Mode일 때 */
+        if (MODE_EDIT) {
+            text_dp_end.setText(sdf1.format(end_cal.getTime()));
+            text_tp_end.setText(sdf2.format(end_cal.getTime()));
+        }
+        else {
+            final Calendar today_calendar = Calendar.getInstance();
+            if (text_dp_end.getText() == "") {
+                text_dp_end.setText(sdf1.format(today_calendar.getTime()));
+            }
+            if (text_tp_end.getText() == "") {
+                text_tp_end.setText(sdf2.format(today_calendar.getTime()));
+            }
+        }
+
+        /* Time, DatePicker 조건부 */
         text_dp_end.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
