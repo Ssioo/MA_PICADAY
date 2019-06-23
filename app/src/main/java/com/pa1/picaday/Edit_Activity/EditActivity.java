@@ -80,22 +80,16 @@ public class EditActivity extends AppCompatActivity {
         this.cycle_input = dateinfo.getCycle();
         this.memo_input = dateinfo.getMemo();
 
-        setTitle = findViewById(R.id.schedule_title_monthly);
         setTitle.setText(title_input);
-        setLocation = findViewById(R.id.location);
         setLocation.setText(location_input);
-        setWho = findViewById(R.id.withwhom);
         setWho.setText(withwhom_input);
-        setPrior = findViewById(R.id.priority_bar);
         setPrior.setRating(priority_input);
-        setParti = findViewById(R.id.participate);
         if(participation_input == 0){
             setParti.setChecked(false);
         }else {
             setParti.setChecked(true);
         }
 //        Spinner setCycle = findViewById(R.id.cycle_monthly)
-        setMemo = findViewById(R.id.memo);
         setMemo.setText(memo_input);
     }
 
