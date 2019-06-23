@@ -40,6 +40,8 @@ public class MainActivity_weekly_list extends Fragment {
     SimpleDateFormat tempSDF = new SimpleDateFormat("d일 H시간 m분", Locale.getDefault());
     SimpleDateFormat tempSDF_d = new SimpleDateFormat("d", Locale.getDefault());
     TextView lefttime;
+    ListView thisweeklist;
+    CustomweeklistAdapter customweeklistAdapter;
     Handler handler;
 
     @Nullable
@@ -71,6 +73,24 @@ public class MainActivity_weekly_list extends Fragment {
         DBManager manager = new DBManager(getActivity());
         thisweek_list = manager.selectAll_thisweek(sdf.format(standardCal_start.getTime()), sdf.format(standardCal_end.getTime()));
 
+
+        /* 오늘 일정 리스트뷰 작성 */
+        thisweeklist = view.findViewById(R.id.weeklist);
+        customweeklistAdapter = new CustomweeklistAdapter();
+        customweeklistAdapter.addList(thisweek_list);
+        thisweeklist.setAdapter(customweeklistAdapter);
+        thisweeklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position > -1 && position < thisweeklist.getCount()) {
+                    Dateinfo dateinfo = thisweek_list.get(position);
+                    AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
+                    addActivity_weekly.setFromSaved(dateinfo);
+                    addActivity_weekly.show(getActivity().getSupportFragmentManager(), "add_weekly");
+                }
+            }
+        });
+
         /* 이번 주 남은 시간 계산 */
         handler = new Handler() {
             @Override
@@ -94,28 +114,6 @@ public class MainActivity_weekly_list extends Fragment {
             }
         });
         thread.start();
-
-        /* 오늘 일정 리스트뷰 작성 */
-        final ListView thisweeklist = view.findViewById(R.id.weeklist);
-        CustomweeklistAdapter customweeklistAdapter = new CustomweeklistAdapter();
-        customweeklistAdapter.addList(thisweek_list);
-        thisweeklist.setAdapter(customweeklistAdapter);
-        final boolean[] check = {false};
-        thisweeklist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position > -1 && position < thisweeklist.getCount()) {
-                    Dateinfo dateinfo = thisweek_list.get(position);
-                    AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
-                    addActivity_weekly.setFromSaved(dateinfo);
-                    addActivity_weekly.show(getActivity().getSupportFragmentManager(), "add_weekly");
-                }
-            }
-        });
-        if(check[0] == true){
-            customweeklistAdapter.notifyDataSetChanged();
-            check[0] = false;
-        }
 
         /* Text style 세팅 */
         SharedPreferences sdp = PreferenceManager.getDefaultSharedPreferences(getActivity());

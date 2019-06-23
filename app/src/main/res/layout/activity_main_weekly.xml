@@ -46,4 +46,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="THIS WEEK" />
 
+    <include
+        layout="@layout/custom_weeklyview"
+        app:layout_constraintBottom_toTopOf="@+id/icanuse_day_thisweek" />
+
 </android.support.constraint.ConstraintLayout>
