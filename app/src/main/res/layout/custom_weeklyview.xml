@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingStart="8dp"
     android:paddingEnd="8dp">
 
@@ -19,14 +19,14 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_month_prev"
+            android:id="@+id/btn_week_prev"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/background_transparent"
             app:srcCompat="@drawable/ic_prev" />
 
         <TextView
-            android:id="@+id/calendar_header"
+            android:id="@+id/weekview_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/scdream4"
@@ -35,12 +35,11 @@
             android:textSize="14sp" />
 
         <ImageButton
-            android:id="@+id/btn_month_next"
+            android:id="@+id/btn_week_next"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/background_transparent"
             app:srcCompat="@drawable/ic_next" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -50,16 +49,6 @@
         android:layout_marginRight="12dp"
         android:background="@color/purple"
         android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:fontFamily="@font/scdream4"
-            android:gravity="center"
-            android:text="일"
-            android:textColor="@color/black"
-            android:textSize="9sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -121,15 +110,62 @@
             android:textColor="@color/black"
             android:textSize="9sp" />
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/scdream4"
+            android:gravity="center"
+            android:text="일"
+            android:textColor="@color/black"
+            android:textSize="9sp" />
     </LinearLayout>
 
-        <GridView
-        android:id="@+id/calendar_day"
+    <LinearLayout
+        android:id="@+id/weekview_day"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/shape_calendar_round_bottom"
+        android:elevation="5dp"
         android:numColumns="7"
-        android:orientation="vertical"/>
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/week_list_monday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ListView
+            android:id="@+id/week_list_tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ListView
+            android:id="@+id/week_list_wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ListView
+            android:id="@+id/week_list_thursday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ListView
+            android:id="@+id/week_list_friday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ListView
+            android:id="@+id/week_list_saturday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <ListView
+            android:id="@+id/week_list_sunday"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>
