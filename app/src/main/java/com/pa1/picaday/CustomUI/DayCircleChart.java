@@ -22,8 +22,10 @@ public class DayCircleChart extends View {
     ArrayList<WritingVO> writing = null;
     int[] colorset = getResources().getIntArray(R.array.chart_colorset);
 
-    int x;
-    int y;
+    int top_left;
+    int bottom_right;
+    int c_width;
+    int c_height;
     private final float START_POINT = -90;
 
     private float ANGLE_PER_TIME = (float) 360/86400;
@@ -33,11 +35,11 @@ public class DayCircleChart extends View {
     private Bitmap clock_background;
 
 
-    public DayCircleChart(Context context, ArrayList<WritingVO> writing, int x, int y) {
+    public DayCircleChart(Context context, ArrayList<WritingVO> writing, int width) {
         super(context);
         this.writing = writing;
-        this.x = x;
-        this.y = y;
+        this.top_left = (int) (width * 0.1);
+        this.bottom_right = (int) (width * 0.9);
         clock_background = BitmapFactory.decodeResource(context.getResources(), R.drawable.clockbackground);
 
     }
@@ -49,8 +51,8 @@ public class DayCircleChart extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        RectF rectF = new RectF(x,x,y,y);
-        canvas.drawBitmap(clock_background, null, new Rect(x,x,y,y), null); // 시계 배경 그리기
+        RectF rectF = new RectF(top_left, top_left, bottom_right, bottom_right);
+        canvas.drawBitmap(clock_background, null, new Rect(top_left, top_left, bottom_right, bottom_right), null); // 시계 배경 그리기
 
         Paint p = new Paint();
 
@@ -63,7 +65,7 @@ public class DayCircleChart extends View {
             p.reset();
             p.setAntiAlias(true);
             p.setStyle(Paint.Style.STROKE);
-            p.setStrokeWidth(y/24);
+            p.setStrokeWidth(bottom_right/24);
             p.setAlpha(0x00);
             p.setStrokeCap(Paint.Cap.BUTT);
             p.setColor(colorset[i % colorset.length]);
@@ -75,9 +77,9 @@ public class DayCircleChart extends View {
             p.setColor(getResources().getColor(R.color.black));
             p.setTextSize(36);
             p.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "scdream4.otf"));
-            canvas.rotate(startAngle + 90 + sweepAngle / 2,(x+y)/2,(x+y)/2);
-            canvas.drawText(writing.get(i).getTitle(), (x+y)/2, x + 10, p);
-            canvas.rotate((startAngle + 90 + sweepAngle / 2) * (-1), (x+y)/2, (x+y)/2);
+            canvas.rotate(startAngle + 90 + sweepAngle / 2, (top_left + bottom_right) / 2, (top_left + bottom_right)/ 2);
+            canvas.drawText(writing.get(i).getTitle(), (top_left + bottom_right) / 2, top_left + 10, p);
+            canvas.rotate((startAngle + 90 + sweepAngle / 2) * (-1), (top_left + bottom_right) / 2, (top_left + bottom_right)/ 2);
             // 시간 일정 정보 채우기
         }
 
