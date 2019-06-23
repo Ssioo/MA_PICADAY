@@ -20,6 +20,8 @@ import com.pa1.picaday.R;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Day;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Time;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -167,32 +169,36 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Dateinfo  dateinfo = (Dateinfo) intent.getSerializableExtra(EDIT_INTENT_KEY);
         this.radio_input = dateinfo.getType_checked();
-        rb1 = findViewById(R.id.chk_day_monthly);
-        rb2 = findViewById(R.id.chk_time_monthly);
-        rb3 = findViewById(R.id.chk_deadline_monthly);
-        switch (radio_input){
-            case 1:
-                rb1.setChecked(true);
-                rb2.setChecked(false);
-                rb3.setChecked(false);
-                fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_day).commit();
-                //시간 설정하기
-                break;
-            case 2:
-                rb1.setChecked(false);
-                rb2.setChecked(true);
-                rb3.setChecked(false);
-                fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
-                break;
-            case 3:
-                rb1.setChecked(false);
-                rb2.setChecked(false);
-                rb3.setChecked(true);
-                fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_deadline).commit();
-                break;
-            default:
-                Toast.makeText(getApplicationContext(), "시간 형식을 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
-                break;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        try {
+            switch (radio_input){
+                case 1:
+                    chk_group.check(R.id.chk_day_monthly);
+                    timeselect_day.start_cal.setTime(sdf.parse(dateinfo.getStart_time()));
+                    timeselect_day.end_cal.setTime(sdf.parse(dateinfo.getEnd_time()));
+                    timeselect_day.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_day).commit();
+                    //시간 설정하기
+                    break;
+                case 2:
+                    chk_group.check(R.id.chk_time_monthly);
+                    timeselect_time.start_cal.setTime(sdf.parse(dateinfo.getStart_time()));
+                    timeselect_time.end_cal.setTime(sdf.parse(dateinfo.getEnd_time()));
+                    timeselect_time.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
+                    break;
+                case 3:
+                    chk_group.check(R.id.chk_deadline_monthly);
+                    timeselect_deadline.end_cal.setTime(sdf.parse(dateinfo.getEnd_time()));
+                    timeselect_day.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_deadline).commit();
+                    break;
+                default:
+                    Toast.makeText(getApplicationContext(), "시간 형식을 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
         chk_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

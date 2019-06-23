@@ -42,6 +42,11 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     private String e_time;
     private int typechecked;
     private EditText schedule_title;
+    private boolean EDIT_MODE = false;
+
+    public void setEDIT_MODE(boolean EDIT_MODE) {
+        this.EDIT_MODE = EDIT_MODE;
+    }
 
     public void setFromSaved(Dateinfo info) {
         this.id = info.getId();
@@ -49,6 +54,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
         this.s_time = info.getStart_time();
         this.e_time = info.getEnd_time();
         this.typechecked = info.getType_checked();
+        EDIT_MODE = true;
     }
 
 
@@ -61,12 +67,12 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_daily, container, false);
 
-
-
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         chk_group_daily = (RadioGroup) view.findViewById(R.id.chk_group_daily);
         schedule_title = view.findViewById(R.id.schedule_title_daily);
+
         /* Edit 경우인 것을 판별 */
-        if (s_title != "") {
+        if (EDIT_MODE) {
             schedule_title.setText(s_title);
 
             try {
@@ -75,15 +81,37 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
                     chk_group_daily.check(R.id.chk_time_daily);
                     timeselect_time.start_cal.setTime(sdf.parse(s_time));
                     timeselect_time.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_time.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_daily, timeselect_time).commit();
                 }
                 else if (typechecked == 3) {
                     chk_group_daily.check(R.id.chk_deadline_daily);
                     timeselect_deadline.end_cal.setTime(sdf.parse(e_time));
+                    timeselect_deadline.setMODE_EDIT(true);
+                    fragmentTransaction.add(R.id.timeselect_picker_daily, timeselect_deadline).commit();
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+        else {
+            fragmentTransaction.add(R.id.timeselect_picker_daily, timeselect_time).commit();
+        }
+
+        /* TImePicker 구동 Fragment*/
+        chk_group_daily.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                if (checkedId == R.id.chk_deadline_daily) {
+                    fragmentTransaction.replace(R.id.timeselect_picker_daily, timeselect_deadline);
+                }
+                else if (checkedId == R.id.chk_time_daily) {
+                    fragmentTransaction.replace(R.id.timeselect_picker_daily, timeselect_time);
+                }
+                fragmentTransaction.commit();
+            }
+        });
 
         /* V 버튼 눌렀을 때 */
         ImageButton btn_check = (ImageButton) view.findViewById(R.id.btn_check_day);
@@ -130,24 +158,7 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
             }
         });
 
-        /* TImePicker 구동 Fragment*/
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.timeselect_picker_daily, timeselect_time).commit();
 
-
-        chk_group_daily.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-                if (checkedId == R.id.chk_deadline_daily) {
-                    fragmentTransaction.replace(R.id.timeselect_picker_daily, timeselect_deadline);
-                }
-                else if (checkedId == R.id.chk_time_daily) {
-                    fragmentTransaction.replace(R.id.timeselect_picker_daily, timeselect_time);
-                }
-                fragmentTransaction.commit();
-            }
-        });
         return view;
     }
 }
