@@ -1,7 +1,5 @@
 package com.pa1.picaday.Edit_Activity;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -16,15 +14,12 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.R;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Day;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Deadline;
 import com.pa1.picaday.Timeselect_Fragment.Timeselect_Time;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -39,6 +34,9 @@ public class EditActivity extends AppCompatActivity {
     private RatingBar setPrior;
     private CheckBox setParti;
     private EditText setMemo;
+    private RadioButton rb1;
+    private RadioButton rb2;
+    private RadioButton rb3;
 
     private int id = 0;
     private String s_title = "";
@@ -52,6 +50,7 @@ public class EditActivity extends AppCompatActivity {
     private int typechecked;
 
     public final static String EDIT_INTENT_KEY = "editKey";
+    public static final int RESULT_CODE = 9999;
 
     private String title_input = "";
     private int radio_input = 0;
@@ -69,10 +68,9 @@ public class EditActivity extends AppCompatActivity {
         super.onStart();
         /*list fragment에서 intent로 date info 받아오기*/
         Intent intent = getIntent();
-        Dateinfo dateinfo = (Dateinfo) intent.getSerializableExtra(EDIT_INTENT_KEY);
+        Dateinfo  dateinfo = (Dateinfo) intent.getSerializableExtra(EDIT_INTENT_KEY);
         this.id = dateinfo.getId();
         this.title_input = dateinfo.getTitle();
-        this.radio_input = dateinfo.getType_checked();
         this.Start_time_input = dateinfo.getStart_time();
         this.End_time_input = dateinfo.getEnd_time();
         this.location_input = dateinfo.getLocation();
@@ -84,24 +82,6 @@ public class EditActivity extends AppCompatActivity {
 
         setTitle = findViewById(R.id.schedule_title_monthly);
         setTitle.setText(title_input);
-        RadioButton rb1 = findViewById(R.id.chk_time_monthly);
-        RadioButton rb2 = findViewById(R.id.chk_day_monthly);
-        RadioButton rb3 = findViewById(R.id.chk_deadline_monthly);
-        switch (radio_input){
-            case 1:
-                rb1.setChecked(true);
-                    //시간 설정하기
-                break;
-            case 2:
-                rb2.setChecked(true);
-                break;
-            case 3:
-                rb3.setChecked(true);
-                break;
-            default:
-                Toast.makeText(getApplicationContext(), "시간 형식을 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
-                break;
-        }
         setLocation = findViewById(R.id.location);
         setLocation.setText(location_input);
         setWho = findViewById(R.id.withwhom);
@@ -172,6 +152,8 @@ public class EditActivity extends AppCompatActivity {
                 DBManager manager = new DBManager(getApplicationContext());
                 manager.updateData(id, newdateinfo);
                 Toast.makeText(getApplicationContext(), "일정이 갱신 되었습니다", Toast.LENGTH_SHORT).show();
+
+                setResult(RESULT_CODE);
                 finish();
             }
         });
@@ -181,14 +163,43 @@ public class EditActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                setResult(RESULT_CODE);
                 finish();
             }
         });
 
         /* TImePicker 구동 Fragment*/
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
+        Intent intent = getIntent();
+        Dateinfo  dateinfo = (Dateinfo) intent.getSerializableExtra(EDIT_INTENT_KEY);
+        this.radio_input = dateinfo.getType_checked();
+        rb1 = findViewById(R.id.chk_day_monthly);
+        rb2 = findViewById(R.id.chk_time_monthly);
+        rb3 = findViewById(R.id.chk_deadline_monthly);
+        switch (radio_input){
+            case 1:
+                rb1.setChecked(true);
+                rb2.setChecked(false);
+                rb3.setChecked(false);
+                fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_day).commit();
+                //시간 설정하기
+                break;
+            case 2:
+                rb1.setChecked(false);
+                rb2.setChecked(true);
+                rb3.setChecked(false);
+                fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_time).commit();
+                break;
+            case 3:
+                rb1.setChecked(false);
+                rb2.setChecked(false);
+                rb3.setChecked(true);
+                fragmentTransaction.add(R.id.timeselect_picker_monthly, timeselect_deadline).commit();
+                break;
+            default:
+                Toast.makeText(getApplicationContext(), "시간 형식을 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
+                break;
+        }
 
         chk_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

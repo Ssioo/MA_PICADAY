@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pa1.picaday.CustomUI.CustomdaylistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
@@ -40,6 +41,8 @@ public class MainActivity_daily_list extends Fragment {
     private DBManager manager;
     Calendar standardCal;
 
+    public static final int START_WITH_RESULT = 1000;
+
     public MainActivity_daily_list() {
     }
 
@@ -50,6 +53,21 @@ public class MainActivity_daily_list extends Fragment {
     SimpleDateFormat tempSDF = new SimpleDateFormat("H시간 m분 s초", Locale.getDefault());
     TextView lefttime;
     Handler handler;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == EditActivity.RESULT_CODE){
+            switch (requestCode){
+                case START_WITH_RESULT:
+                    Toast.makeText(getActivity(), "정상 작동", Toast.LENGTH_LONG).show();
+                    today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
+                    customdaylistAdapter.addList(today_list);
+                    todaylist.setAdapter(customdaylistAdapter);
+                    break;
+            }
+        }
+    }
 
     @Nullable
     @Override
@@ -75,10 +93,12 @@ public class MainActivity_daily_list extends Fragment {
                     Dateinfo dateinfo = today_list.get(position);
                     Intent intent = new Intent(getActivity(), EditActivity.class);
                     intent.putExtra(EditActivity.EDIT_INTENT_KEY, dateinfo);
-                    startActivity(intent);
+                    startActivityForResult(intent, START_WITH_RESULT);
                 }
             }
         });
+
+
 
 
         /* 오늘 남은 시간 계산 */
