@@ -1,5 +1,6 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +15,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
+import com.pa1.picaday.CustomUI.CustomdaylistAdapter;
 import com.pa1.picaday.CustomUI.CustommonthlistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
+import com.pa1.picaday.Edit_Activity.EditActivity;
 import com.pa1.picaday.R;
 
 import java.text.ParseException;
@@ -29,6 +33,15 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity_monthly_list extends Fragment {
+
+    private ListView thismonthlist;
+    private CustommonthlistAdapter custommonthlistAdapter;
+    private DBManager manager;
+    private Calendar standardCal;
+    public static final int START_WITH_RESULT = 1000;
+    public static final String DATA_CHANGED = "data changed";
+
+
     public MainActivity_monthly_list() {
     }
 
@@ -42,14 +55,29 @@ public class MainActivity_monthly_list extends Fragment {
     Handler handler;
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == EditActivity.RESULT_CODE){
+            switch (requestCode){
+                case START_WITH_RESULT:
+                    thismonth_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
+                    custommonthlistAdapter.addList(thismonth_list);
+                    thismonthlist.setAdapter(custommonthlistAdapter);
+                    break;
+            }
+        }
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_monthly_list, container, false);
 
-        Calendar standardCal = Calendar.getInstance();
+        standardCal = Calendar.getInstance();
 
-        DBManager manager = new DBManager(getActivity());
+        manager = new DBManager(getActivity());
         thismonth_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
 
         /* 이번 달 남은 일자 계산 */
@@ -77,8 +105,8 @@ public class MainActivity_monthly_list extends Fragment {
         thread.start();
 
         /* 오늘 일정 리스트뷰 작성 */
-        final ListView thismonthlist = view.findViewById(R.id.monthlist);
-        CustommonthlistAdapter custommonthlistAdapter = new CustommonthlistAdapter();
+        thismonthlist = view.findViewById(R.id.monthlist);
+        custommonthlistAdapter = new CustommonthlistAdapter();
         custommonthlistAdapter.addList(thismonth_list);
         thismonthlist.setAdapter(custommonthlistAdapter);
         final boolean[] check = {false};
@@ -87,12 +115,23 @@ public class MainActivity_monthly_list extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > -1 && position < thismonthlist.getCount()) {
                     Dateinfo dateinfo = thismonth_list.get(position);
-                    AddActivity_monthly addActivity_monthly = AddActivity_monthly.getInstance();
-                    addActivity_monthly.setFromSaved(dateinfo);
-                    addActivity_monthly.show(getActivity().getSupportFragmentManager(), "add_monthly");
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    intent.putExtra(EditActivity.EDIT_INTENT_KEY, dateinfo);
+                    startActivityForResult(intent, START_WITH_RESULT);
                 }
             }
         });
+
+        /* 삭제 시 listview 갱신 */
+        custommonthlistAdapter.setOnDataSetChangedListener(new CustommonthlistAdapter.OnDataSetChangedListener() {
+            @Override
+            public void onDataSetChangedListener(String key) {
+                thismonth_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
+                custommonthlistAdapter.addList(thismonth_list);
+                thismonthlist.setAdapter(custommonthlistAdapter);
+            }
+        });
+
 
         /* Text style 세팅 */
         SharedPreferences sdp = PreferenceManager.getDefaultSharedPreferences(getActivity());

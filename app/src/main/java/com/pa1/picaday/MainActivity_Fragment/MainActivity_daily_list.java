@@ -33,7 +33,6 @@ public class MainActivity_daily_list extends Fragment{
     private ListView todaylist;
     private DBManager manager;
     Calendar standardCal;
-
     public static final int START_WITH_RESULT = 1000;
     public static final String DATA_CHANGED = "data changed";
 
@@ -54,7 +53,6 @@ public class MainActivity_daily_list extends Fragment{
         if(resultCode == EditActivity.RESULT_CODE){
             switch (requestCode){
                 case START_WITH_RESULT:
-                    Toast.makeText(getActivity(), "정상 작동", Toast.LENGTH_LONG).show();
                     today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
                     customdaylistAdapter.addList(today_list);
                     todaylist.setAdapter(customdaylistAdapter);
@@ -97,7 +95,6 @@ public class MainActivity_daily_list extends Fragment{
         customdaylistAdapter.setOnDataSetChangedListener(new CustomdaylistAdapter.OnDataSetChangedListener() {
             @Override
             public void onDataSetChangedListener(String key) {
-                Toast.makeText(getActivity(), "정상 작동", Toast.LENGTH_LONG).show();
                 today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
                 customdaylistAdapter.addList(today_list);
                 todaylist.setAdapter(customdaylistAdapter);

@@ -98,9 +98,9 @@ public class CustomdaylistAdapter extends BaseAdapter {
                                 Toast.makeText(context, "일정을 삭제했습니다.", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                                 /* 삭제 시 listview 갱신 */
-                                if(onDataSetChangedListener != null){{
+                                if(onDataSetChangedListener != null){
                                     onDataSetChangedListener.onDataSetChangedListener(MainActivity_daily_list.DATA_CHANGED);
-                                }}
+                                }
                             }
                         })
                         .setCancelable(false)

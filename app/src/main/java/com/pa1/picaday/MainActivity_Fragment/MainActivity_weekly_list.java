@@ -1,5 +1,6 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
 import com.pa1.picaday.CustomUI.CustomweeklistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
+import com.pa1.picaday.Edit_Activity.EditActivity;
 import com.pa1.picaday.R;
 
 import java.text.ParseException;
@@ -29,6 +31,14 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity_weekly_list extends Fragment {
+
+
+    private Calendar standardCal_start;
+    private Calendar standardCal_end;
+    DBManager manager;
+    public static final int START_WITH_RESULT = 1000;
+    public static final String DATA_CHANGED = "data changed";
+
     public MainActivity_weekly_list() {
     }
 
@@ -40,17 +50,31 @@ public class MainActivity_weekly_list extends Fragment {
     SimpleDateFormat tempSDF = new SimpleDateFormat("d일 H시간 m분", Locale.getDefault());
     SimpleDateFormat tempSDF_d = new SimpleDateFormat("d", Locale.getDefault());
     TextView lefttime;
-    ListView thisweeklist;
-    CustomweeklistAdapter customweeklistAdapter;
+    private ListView thisweeklist;
+    private CustomweeklistAdapter customweeklistAdapter;
     Handler handler;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == EditActivity.RESULT_CODE){
+            switch (requestCode){
+                case START_WITH_RESULT:
+                    thisweek_list = manager.selectAll_thisweek(sdf.format(standardCal_start.getTime()), sdf.format(standardCal_end.getTime()));
+                    customweeklistAdapter.addList(thisweek_list);
+                    thisweeklist.setAdapter(customweeklistAdapter);
+                    break;
+            }
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_weekly_list, container, false);
 
-        Calendar standardCal_start = Calendar.getInstance();
-        Calendar standardCal_end = Calendar.getInstance();
+        standardCal_start = Calendar.getInstance();
+        standardCal_end = Calendar.getInstance();
         if (standardCal_start.get(Calendar.DAY_OF_WEEK) == 1) {
             // 일요일일 경우
             standardCal_start.add(Calendar.DAY_OF_MONTH, -6); // 월요일
@@ -70,7 +94,7 @@ public class MainActivity_weekly_list extends Fragment {
 
         standcal = standardCal_end.getTime().getTime();
 
-        DBManager manager = new DBManager(getActivity());
+        manager = new DBManager(getActivity());
         thisweek_list = manager.selectAll_thisweek(sdf.format(standardCal_start.getTime()), sdf.format(standardCal_end.getTime()));
 
 
@@ -84,10 +108,20 @@ public class MainActivity_weekly_list extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position > -1 && position < thisweeklist.getCount()) {
                     Dateinfo dateinfo = thisweek_list.get(position);
-                    AddActivity_weekly addActivity_weekly = AddActivity_weekly.getInstance();
-                    addActivity_weekly.setFromSaved(dateinfo);
-                    addActivity_weekly.show(getActivity().getSupportFragmentManager(), "add_weekly");
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    intent.putExtra(EditActivity.EDIT_INTENT_KEY, dateinfo);
+                    startActivityForResult(intent, START_WITH_RESULT);
                 }
+            }
+        });
+
+        /* 삭제 시 listview 갱신 */
+        customweeklistAdapter.setOnDataSetChangedListener(new CustomweeklistAdapter.OnDataSetChangedListener() {
+            @Override
+            public void onDataSetChangedListener(String key) {
+                thisweek_list = manager.selectAll_thisweek(sdf.format(standardCal_start.getTime()), sdf.format(standardCal_end.getTime()));
+                customweeklistAdapter.addList(thisweek_list);
+                thisweeklist.setAdapter(customweeklistAdapter);
             }
         });
 
