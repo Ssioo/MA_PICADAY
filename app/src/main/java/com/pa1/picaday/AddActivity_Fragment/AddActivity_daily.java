@@ -56,8 +56,6 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
         return new AddActivity_daily();
     }
 
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -150,8 +148,6 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
                 fragmentTransaction.commit();
             }
         });
-
-
         return view;
     }
 }

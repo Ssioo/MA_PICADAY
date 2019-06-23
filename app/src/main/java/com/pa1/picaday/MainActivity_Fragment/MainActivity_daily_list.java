@@ -1,7 +1,4 @@
 package com.pa1.picaday.MainActivity_Fragment;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,22 +8,18 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.pa1.picaday.CustomUI.CustomdaylistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.Edit_Activity.EditActivity;
 import com.pa1.picaday.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity_daily_list extends Fragment {
+public class MainActivity_daily_list extends Fragment{
 
     private CustomdaylistAdapter customdaylistAdapter;
     private ListView todaylist;
@@ -42,6 +35,7 @@ public class MainActivity_daily_list extends Fragment {
     Calendar standardCal;
 
     public static final int START_WITH_RESULT = 1000;
+    public static final String DATA_CHANGED = "data changed";
 
     public MainActivity_daily_list() {
     }
@@ -99,6 +93,16 @@ public class MainActivity_daily_list extends Fragment {
         });
 
 
+        /* 삭제 시 listview 갱신 */
+        customdaylistAdapter.setOnDataSetChangedListener(new CustomdaylistAdapter.OnDataSetChangedListener() {
+            @Override
+            public void onDataSetChangedListener(String key) {
+                Toast.makeText(getActivity(), "정상 작동", Toast.LENGTH_LONG).show();
+                today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
+                customdaylistAdapter.addList(today_list);
+                todaylist.setAdapter(customdaylistAdapter);
+            }
+        });
 
 
         /* 오늘 남은 시간 계산 */

@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +13,26 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.Database.DBManager;
+import com.pa1.picaday.MainActivity_Fragment.MainActivity_daily_list;
 import com.pa1.picaday.R;
 
 import java.util.ArrayList;
 
 public class CustomdaylistAdapter extends BaseAdapter {
 
+    public interface OnDataSetChangedListener {
+        void onDataSetChangedListener(String key);
+    }
+
     private ArrayList<Dateinfo> dayitemlist = new ArrayList<>();
     private boolean delayEnterAnimation = true;
     private boolean animationsLocked = false;
+    private OnDataSetChangedListener onDataSetChangedListener;
+
+    public void setOnDataSetChangedListener(OnDataSetChangedListener onDataSetChangedListener){
+        this.onDataSetChangedListener = onDataSetChangedListener;
+    }
 
     public CustomdaylistAdapter() {
     }
@@ -90,6 +97,10 @@ public class CustomdaylistAdapter extends BaseAdapter {
                                 dbManager.removeData(dayitemlist.get(pos));
                                 Toast.makeText(context, "일정을 삭제했습니다.", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
+                                /* 삭제 시 listview 갱신 */
+                                if(onDataSetChangedListener != null){{
+                                    onDataSetChangedListener.onDataSetChangedListener(MainActivity_daily_list.DATA_CHANGED);
+                                }}
                             }
                         })
                         .setCancelable(false)
