@@ -37,6 +37,7 @@ dependencies {
     implementation 'com.github.marcohc:robotocalendarview:3.6.1'
     implementation 'com.applandeo:material-calendar-view:1.4.0'
     implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

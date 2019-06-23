@@ -1,5 +1,6 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.CustomUI.CustomdaylistAdapter;
 import com.pa1.picaday.CustomUI.Dateinfo;
 import com.pa1.picaday.Database.DBManager;
+import com.pa1.picaday.Edit_Activity.EditActivity;
 import com.pa1.picaday.R;
 
 import java.text.ParseException;
@@ -63,9 +65,8 @@ public class MainActivity_daily_list extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position > -1 && position < todaylist.getCount()){
                     Dateinfo dateinfo = today_list.get(position);
-                    AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
-                    addActivity_daily.setFromSaved(dateinfo);
-                    addActivity_daily.show(getActivity().getSupportFragmentManager(),"add_daily");
+                    Intent intent = new Intent(getActivity(), EditActivity.class);
+                    startActivity(intent);
                     check[0] = true;
                 }
             }
