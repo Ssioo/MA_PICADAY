@@ -1,5 +1,6 @@
 package com.pa1.picaday.MainActivity_Fragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,9 +9,14 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pa1.picaday.CustomUI.Dateinfo;
@@ -29,13 +35,32 @@ public class MainActivity_weekly extends Fragment {
 
     long thisweek_left_time;
     long standcal;
-    TextView lefttime;
+    Calendar calendar;
+    private TextView lefttime;
+    private TextView weekview_header;
+    private TextView weekview_dayofmon;
+    private TextView weekview_dayoftue;
+    private TextView weekview_dayofwed;
+    private TextView weekview_dayofthr;
+    private TextView weekview_dayoffri;
+    private TextView weekview_dayofsat;
+    private TextView weekview_dayofsun;
+    RelativeLayout monday;
+    RelativeLayout tuesday;
+    RelativeLayout wednesday;
+    RelativeLayout thursday;
+    RelativeLayout friday;
+    RelativeLayout saturday;
+    RelativeLayout sunday;
+    ArrayList<RelativeLayout> days = new ArrayList<>();
+    ArrayList<String> textArr = new ArrayList<>();
     ArrayList<Dateinfo> thisweek_list = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     SimpleDateFormat tempSDF = new SimpleDateFormat("d일 H시간 m분", Locale.getDefault());
     SimpleDateFormat tempSDF_d = new SimpleDateFormat("d", Locale.getDefault());
     Handler handler;
+    Fragment act = this;
 
     public MainActivity_weekly() {
 
@@ -45,6 +70,29 @@ public class MainActivity_weekly extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_main_weekly, container, false);
+
+        weekview_dayofmon = view.findViewById(R.id.weekview_day_ofmon);
+        weekview_dayoftue = view.findViewById(R.id.weekview_day_oftue);
+        weekview_dayofwed = view.findViewById(R.id.weekview_day_ofwed);
+        weekview_dayofthr = view.findViewById(R.id.weekview_day_ofthr);
+        weekview_dayoffri = view.findViewById(R.id.weekview_day_offri);
+        weekview_dayofsat = view.findViewById(R.id.weekview_day_ofsat);
+        weekview_dayofsun = view.findViewById(R.id.weekview_day_ofsun);
+
+        monday = view.findViewById(R.id.week_list_monday);
+        tuesday = view.findViewById(R.id.week_list_tuesday);
+        wednesday = view.findViewById(R.id.week_list_wednesday);
+        thursday = view.findViewById(R.id.week_list_thursday);
+        friday = view.findViewById(R.id.week_list_friday);
+        saturday = view.findViewById(R.id.week_list_saturday);
+        sunday = view.findViewById(R.id.week_list_sunday);
+        days.add(monday);
+        days.add(tuesday);
+        days.add(wednesday);
+        days.add(thursday);
+        days.add(friday);
+        days.add(saturday);
+        days.add(sunday);
 
         /* Text style 세팅 */
         SharedPreferences sdp = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -82,6 +130,35 @@ public class MainActivity_weekly extends Fragment {
 
         DBManager manager = new DBManager(getActivity());
         thisweek_list = manager.selectAll_thisweek(sdf.format(standardCal_start.getTime()), sdf.format(standardCal_end.getTime()));
+
+
+        /* 달력 Header 꾸미기*/
+        calendar = Calendar.getInstance();
+        if (calendar.get(Calendar.DAY_OF_WEEK) == 1)
+            calendar.add(Calendar.DATE, -7);
+        calendar.set(Calendar.DAY_OF_WEEK, 2);
+
+        weekview_header = view.findViewById(R.id.weekview_header);
+        weekview_header.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1) + "월 " + String.valueOf(calendar.get(Calendar.WEEK_OF_MONTH) + "째주"));
+        ImageButton calendar_prev = view.findViewById(R.id.btn_week_prev);
+        calendar_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.DATE, -7);
+                getweekCalendar(calendar.getTime(), view);
+            }
+        });
+        ImageButton calendar_next = view.findViewById(R.id.btn_week_next);
+        calendar_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calendar.add(Calendar.DATE, 7);
+                getweekCalendar(calendar.getTime(), view);
+            }
+        });
+
+        /* 달력 이번주 월~일 날짜 채우기 */
+        getweekCalendar(calendar.getTime(), view);
 
         /* 이번 주 남은 시간 계산 */
         handler = new Handler() {
@@ -145,5 +222,58 @@ public class MainActivity_weekly extends Fragment {
         Date thisweek_left = new Date(thisweek_left_time + thismonth.getTime().getTime());
         String tempstr = String.valueOf(Integer.parseInt(tempSDF_d.format(thisweek_left)) - 1) + tempSDF.format(thisweek_left).substring(tempSDF.format(thisweek_left).indexOf("일"));
         lefttime.setText(tempstr);
+    }
+
+    private void getweekCalendar(Date date, View view) {
+        textArr.clear();
+
+        Calendar newcalendar = Calendar.getInstance();
+        newcalendar.setTime(date);
+        weekview_header.setText(String.valueOf(newcalendar.get(Calendar.MONTH) + 1) + "월 " + String.valueOf(newcalendar.get(Calendar.WEEK_OF_MONTH)) + "째주");
+
+        for (int i=0; i< 7; i++) {
+            textArr.add(String.valueOf(newcalendar.get(Calendar.DAY_OF_MONTH)));
+            newcalendar.add(Calendar.DATE, 1);
+        }
+        /* 이번주 일자 작성 */
+        weekview_dayofmon.setText(textArr.get(0));
+        weekview_dayoftue.setText(textArr.get(1));
+        weekview_dayofwed.setText(textArr.get(2));
+        weekview_dayofthr.setText(textArr.get(3));
+        weekview_dayoffri.setText(textArr.get(4));
+        weekview_dayofsat.setText(textArr.get(5));
+        weekview_dayofsun.setText(textArr.get(6));
+
+        /* 달력 리스트뷰 RelativeLayout 호출 */
+        ArrayList<TextView> tvset = new ArrayList<>();
+        int[] howmuchon_day = {0, 0, 0, 0, 0, 0, 0};
+        for (int i=0; i<thisweek_list.size(); i++) {
+            Calendar tempcalendar = Calendar.getInstance();
+            try {
+                tempcalendar.setTime(sdf_full.parse(thisweek_list.get(i).getStart_time()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            int day = (tempcalendar.get(Calendar.DAY_OF_WEEK) + 5) % 7;
+            TextView tv = new TextView(getActivity());
+            tv.setText(thisweek_list.get(i).getTitle());
+            tv.setTextColor(getResources().getColor(R.color.white));
+            tv.setBackgroundColor(getResources().getColor(R.color.coral_red));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 9);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
+                    (ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            tv.setId(tv.generateViewId());
+            if (howmuchon_day[day] != 0) {
+                layoutParams.addRule(RelativeLayout.BELOW, days.get(day).getChildAt(howmuchon_day[day] - 1).getId());
+            }
+            tv.setHeight(30);
+            tv.setLayoutParams(layoutParams);
+            tvset.add(tv);
+            days.get(day).addView(tv, howmuchon_day[day]);
+            howmuchon_day[day] = howmuchon_day[day] + 1;
+
+        }
+        //weekview_day = view.findViewById(R.id.calendar_day);
+        //weekview_day.setAdapter(new MainActivity_weekly.CustomWeekview_Day());
     }
 }
