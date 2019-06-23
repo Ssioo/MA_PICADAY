@@ -37,13 +37,15 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
     private String e_time;
     private int typechecked;
     private EditText schedule_title;
+    private boolean EDIT_MODE = false;
 
-    public void setFromSaved(Dateinfo info) {
+    public void setFromSaved(Dateinfo info) { // EDIT 상태일 경우
         this.id = info.getId();
         this.s_title = info.getTitle();
         this.s_time = info.getStart_time();
         this.e_time = info.getEnd_time();
         this.typechecked = info.getType_checked();
+        this.EDIT_MODE = true;
     }
 
     public static AddActivity_weekly getInstance() { return new AddActivity_weekly();    }
@@ -55,28 +57,59 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
 
         chk_group_weekly = (RadioGroup) view.findViewById(R.id.chk_group_weekly);
         schedule_title = (EditText) view.findViewById(R.id.schedule_title_weekly);
+        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+
         /* Edit 경우인 것을 판별 */
-        if (s_title != "") {
+        if (EDIT_MODE) { //TOD : EDIT_MODE로 받기
             schedule_title.setText(s_title);
 
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-                if (typechecked == 2) {
+                if (typechecked == 2) { // time 형태
                     chk_group_weekly.check(R.id.chk_time_weekly);
                     timeselect_time.start_cal.setTime(sdf.parse(s_time));
                     timeselect_time.end_cal.setTime(sdf.parse(e_time));
+                    fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit();
+                    timeselect_time.setMODE_EDIT(true);
                 }
-                else if (typechecked == 3) {
+                else if (typechecked == 3) { // deadline 형태
                     chk_group_weekly.check(R.id.chk_deadline_weekly);
                     timeselect_deadline.end_cal.setTime(sdf.parse(e_time));
+                    fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_deadline).commit();
                 }
-                else if (typechecked == 1) {
+                else if (typechecked == 1) { // day 형태
                     chk_group_weekly.check(R.id.chk_day_weekly);
+                    fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_day).commit();
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+        else {
+            fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit(); // 초기 : TOD - typechecked불러오는 형식으로 변경
+        }
+
+        /* 시간, 하루종일, 데드라인 형태 변환 체크 */
+
+        chk_group_weekly.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                if (checkedId == R.id.chk_day_weekly) {
+                    /* 시간 & 종료 시간 설정 Fragment 호출 */
+                    fragmentTransaction.replace(R.id.timeselect_picker_weekly, timeselect_day);
+                }
+                else if (checkedId == R.id.chk_time_weekly) {
+                    /* 시간 & 종료 시간 설정 Fragment 호출 */
+                    fragmentTransaction.replace(R.id.timeselect_picker_weekly, timeselect_time);
+                }
+                else if (checkedId == R.id.chk_deadline_weekly) {
+                    /* 시간 & 종료 시간 설정 Fragment 호출 */
+                    fragmentTransaction.replace(R.id.timeselect_picker_weekly, timeselect_deadline);
+                }
+                fragmentTransaction.commit();
+            }
+        });
 
         /* V 버튼 눌렀을 때 */
         ImageButton btn_check = (ImageButton) view.findViewById(R.id.btn_check_week);
@@ -130,30 +163,7 @@ public class AddActivity_weekly extends BottomSheetDialogFragment {
             }
         });
 
-        FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.timeselect_picker_weekly, timeselect_time).commit();
 
-        /* 시간, 하루종일, 데드라인 형태 변환 체크 */
-
-        chk_group_weekly.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-                if (checkedId == R.id.chk_day_weekly) {
-                    /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_weekly, timeselect_day);
-                }
-                else if (checkedId == R.id.chk_time_weekly) {
-                    /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_weekly, timeselect_time);
-                }
-                else if (checkedId == R.id.chk_deadline_weekly) {
-                    /* 시간 & 종료 시간 설정 Fragment 호출 */
-                    fragmentTransaction.replace(R.id.timeselect_picker_weekly, timeselect_deadline);
-                }
-                fragmentTransaction.commit();
-            }
-        });
 
         return view;
     }
