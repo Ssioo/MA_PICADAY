@@ -1,5 +1,7 @@
 package com.pa1.picaday.CustomUI;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,12 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_weekly;
 import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.R;
@@ -25,6 +27,8 @@ import java.util.Locale;
 
 public class CustomweeklistAdapter extends BaseAdapter {
     private ArrayList<Dateinfo> weekitemlist = new ArrayList<>();
+    private boolean animationsLocked = false;
+    private boolean delayEnterAnimation = true;
     public CustomweeklistAdapter() {
     }
 
@@ -47,6 +51,21 @@ public class CustomweeklistAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.custom_daylistview, parent, false);
         }
 
+        if (!animationsLocked) {
+            convertView.setTranslationY(100);
+            convertView.setAlpha(0.f);
+            convertView.animate().translationY(0).alpha(1.f).setStartDelay(delayEnterAnimation ? 20 * (position) : 0)
+                    .setInterpolator(new DecelerateInterpolator(2.f))
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            animationsLocked =  true;
+                        }
+                    })
+                    .start();
+        }
+
         TextView title = convertView.findViewById(R.id.daylist_title);
         TextView description = convertView.findViewById(R.id.daylist_start_end_time);
         title.setText(weekitemlist.get(position).getTitle());
@@ -59,14 +78,7 @@ public class CustomweeklistAdapter extends BaseAdapter {
                 + weekitemlist.get(position).getEnd_time().substring(10,16));
 
 
-        ImageButton btn_daylist_edit = convertView.findViewById(R.id.btn_daylist_edit);
-        btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddActivity_weekly addActivity_weekly= AddActivity_weekly.getInstance();
-                addActivity_weekly.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_weekly");
-            }
-        });
+
         ImageButton btn_daylist_remove = convertView.findViewById(R.id.btn_daylist_remove);
         btn_daylist_remove.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,10 +1,14 @@
 package com.pa1.picaday.AddActivity_Fragment;
 
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,10 +56,14 @@ public class AddActivity_daily extends BottomSheetDialogFragment {
         return new AddActivity_daily();
     }
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.add_daily, container, false);
+
+
 
         chk_group_daily = (RadioGroup) view.findViewById(R.id.chk_group_daily);
         schedule_title = view.findViewById(R.id.schedule_title_daily);

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_round_list">
 
     <TextView
         android:id="@+id/icanuse_day_thismonth_list"
@@ -48,6 +49,14 @@
         android:id="@+id/monthlist"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:divider="@drawable/background_transparent"
+        android:dividerHeight="8dp"
+        android:padding="5dp"
+        android:smoothScrollbar="true"
         app:layout_constraintBottom_toTopOf="@+id/icanuse_day_thismonth_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/today_thismonth_list" />
 </android.support.constraint.ConstraintLayout>

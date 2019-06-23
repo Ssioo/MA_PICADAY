@@ -1,34 +1,31 @@
 package com.pa1.picaday.CustomUI;
 
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pa1.picaday.AddActivity_Fragment.AddActivity_daily;
-import com.pa1.picaday.AddActivity_Fragment.AddActivity_monthly;
 import com.pa1.picaday.Database.DBManager;
 import com.pa1.picaday.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CustomdaylistAdapter extends BaseAdapter {
 
     private ArrayList<Dateinfo> dayitemlist = new ArrayList<>();
+    private boolean delayEnterAnimation = true;
+    private boolean animationsLocked = false;
 
     public CustomdaylistAdapter() {
     }
@@ -57,6 +54,20 @@ public class CustomdaylistAdapter extends BaseAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_daylistview, parent, false);
         }
+        if (!animationsLocked) {
+            convertView.setTranslationY(100);
+            convertView.setAlpha(0.f);
+            convertView.animate().translationY(0).alpha(1.f).setStartDelay(delayEnterAnimation ? 20 * (position) : 0)
+                    .setInterpolator(new DecelerateInterpolator(2.f))
+                    .setDuration(300)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            animationsLocked =  true;
+                        }
+                    })
+                    .start();
+        }
 
         TextView title = convertView.findViewById(R.id.daylist_title);
         TextView description = convertView.findViewById(R.id.daylist_start_end_time);
@@ -64,15 +75,7 @@ public class CustomdaylistAdapter extends BaseAdapter {
         description.setText(dayitemlist.get(pos).getStart_time().substring(11,16) + " ~ " + dayitemlist.get(pos).getEnd_time().substring(11,16));
 
 
-        ImageButton btn_daylist_edit = convertView.findViewById(R.id.btn_daylist_edit);
-        btn_daylist_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddActivity_daily addActivity_daily = AddActivity_daily.getInstance();
-                addActivity_daily.setFromSaved(dayitemlist.get(pos));
-                addActivity_daily.show(((AppCompatActivity) context).getSupportFragmentManager(),"add_daily");
-            }
-        });
+
         ImageButton btn_daylist_remove = convertView.findViewById(R.id.btn_daylist_remove);
         btn_daylist_remove.setOnClickListener(new View.OnClickListener() {
             @Override
