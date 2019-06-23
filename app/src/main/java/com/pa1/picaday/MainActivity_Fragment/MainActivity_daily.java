@@ -2,13 +2,16 @@ package com.pa1.picaday.MainActivity_Fragment;
 
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.Pair;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,13 +39,13 @@ public class MainActivity_daily extends Fragment {
         // Required empty public constructor
     }
 
-
-
-
     ArrayList<WritingVO> writing = new ArrayList<>();
     ArrayList<Dateinfo> today_list = new ArrayList<>();
-    ArrayList<Pair<Date, Date>> datacal = new ArrayList<>();
     private TextView lefttime;
+    private FrameLayout daychart;
+    private DayCircleChart dayCircleChart;
+    private DayCirclePin dayCirclePin;
+    Point size;
     Handler handler;
     long today_left_time;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -73,30 +76,37 @@ public class MainActivity_daily extends Fragment {
         standardCal.set(standardCal.get(Calendar.YEAR),standardCal.get(Calendar.MONTH),standardCal.get(Calendar.DAY_OF_MONTH), 0,0,0);
         final long standcal = standardCal.getTime().getTime();
 
-
-
         DBManager manager = new DBManager(getActivity());
         today_list = manager.selectAll_today(sdf.format(standardCal.getTime()));
         for (int i=0;i<today_list.size();i++) {
+            long datacal_sp = 0;
+            long datacal_ep = 0;
             try {
-                datacal.add(new Pair<>(sdf_full.parse(today_list.get(i).getStart_time()),
-                        sdf_full.parse(today_list.get(i).getEnd_time())));
+                datacal_sp = sdf_full.parse(today_list.get(i).getStart_time()).getTime();
+                datacal_ep = sdf_full.parse(today_list.get(i).getEnd_time()).getTime();
+                writing.add(new WritingVO((datacal_sp - standcal)/1000, (datacal_ep - standcal)/1000, today_list.get(i).getTitle()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-
-        FrameLayout daychart = view.findViewById(R.id.daychart);
-        DayCircleChart dayCircleChart = new DayCircleChart(getActivity(), writing, 100, 1000);
-        DayCirclePin dayCirclePin = new DayCirclePin(getActivity(), 100, 1000);
-        daychart.addView(dayCircleChart);
-        daychart.addView(dayCirclePin);
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
+        Log.e("width", String.valueOf(size.x));
+        Log.e("height", String.valueOf(size.y));
+        daychart = view.findViewById(R.id.daychart);
+        dayCircleChart = new DayCircleChart(getActivity(), writing, size.x);
+        dayCirclePin = new DayCirclePin(getActivity(), size.x);
+        daychart.addView(dayCircleChart, 0);
+        daychart.addView(dayCirclePin, 1);
 
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 get_lefttime(standcal);
+                daychart.removeViewAt(1);
+                daychart.addView(dayCirclePin, 1);
             }
         };
 
@@ -106,7 +116,7 @@ public class MainActivity_daily extends Fragment {
                 while (true) {
                     handler.sendEmptyMessage(0);
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -142,18 +152,23 @@ public class MainActivity_daily extends Fragment {
         tommorowcal.set(Calendar.MINUTE, 0);
         tommorowcal.set(Calendar.SECOND, 0);
         today_left_time = tommorowcal.getTime().getTime() - nowcal.getTime().getTime();
-        for(int i=0; i<datacal.size(); i++) {
+        for(int i=0; i<today_list.size(); i++) {
             long nowcallong = nowcal.getTime().getTime();
-            long datacal_sp = datacal.get(i).first.getTime();
-            long datacal_ep = datacal.get(i).second.getTime();
-            writing.add(new WritingVO((datacal_sp - standcal)/1000, (datacal_ep - standcal)/1000, today_list.get(i).getTitle()));
+            long datacal_sp = 0;
+            long datacal_ep = 0;
+            try {
+                datacal_sp = sdf_full.parse(today_list.get(i).getStart_time()).getTime();
+                datacal_ep = sdf_full.parse(today_list.get(i).getEnd_time()).getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
             if (nowcallong > datacal_ep) {
                 continue; // endtime보다 지났을 때 : 안 빼기
             }
             else if (nowcallong <= datacal_ep && nowcallong > datacal_sp) {
-                today_left_time = today_left_time - (datacal_ep - nowcal.getTime().getTime());
                 // 현재 starttime이랑 endtime 사이에 있을 때
+                today_left_time = today_left_time - (datacal_ep - nowcal.getTime().getTime());
             }
             else {
                 // starttime 전일 때 : 다 빼기
