@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="시작 페이지">
+        <ListPreference
+            android:entries="@array/startpage_set"
+            android:entryValues="@array/startpage_set"
+            android:title="시작 캘린더"
+            android:key="startpage"
+            android:defaultValue="DAY"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:title="리스트형 보기"
+            android:key="listmode"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="타이머 스타일">
+        <ListPreference
+            android:entries="@array/timerstyle_set"
+            android:entryValues="@array/timerstyle_set"
+            android:title="타이머 스타일"
+            android:key="timerstyle"
+            android:defaultValue="스타일1"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

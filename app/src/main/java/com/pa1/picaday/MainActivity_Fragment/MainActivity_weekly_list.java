@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -117,14 +118,14 @@ public class MainActivity_weekly_list extends Fragment {
         }
 
         /* Text style 세팅 */
-        SharedPreferences sd = getActivity().getSharedPreferences("style_settings", 0);
+        SharedPreferences sdp = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         lefttime = view.findViewById(R.id.time_left_thisweek_list);
-        if (sd.getBoolean("style_timer1", false)) {
+        if (sdp.getString("timerstyle", "").equals("스타일1")) {
             lefttime.setTypeface(getActivity().getResources().getFont(R.font.american_captain));
             lefttime.setTextColor(getActivity().getResources().getColor(R.color.warm_blue));
         }
-        else if (sd.getBoolean("style_timer2", false)) {
+        else if (sdp.getString("timerstyle", "").equals("스타일2")) {
             lefttime.setTypeface(getActivity().getResources().getFont(R.font.baemin_jua));
             lefttime.setTextColor(getActivity().getResources().getColor(R.color.coral_red));
         }
